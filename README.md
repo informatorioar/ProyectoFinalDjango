@@ -1,16 +1,14 @@
-# Proyecto Final - Curso Python 🐍 CoderHouse
+# Proyecto Final - Curso Desarrollo Web Python y Django 🐍 INFORMATORIO
 
 ## Tienda online - Impresion 3D
 
 El proyecto consiste en la base de una **tienda online** de venta de productos e insumos para impresión 3D.
 
----
 
-[![video_ProyectoFinal](/static/images/Video_YouTube.png)](https://www.youtube.com/embed/6qYGL0aBFus)
 
 ---
 _Link de repositorio_:
-[Github](https://github.com/yamilb87/lambda3d.git)
+[Github](https://github.com/WilsonLombardo/ProyectoFinalDjango)
 
 ***
 
@@ -18,21 +16,81 @@ _Link de repositorio_:
 
 | Apellido    |  Nombre   |
 |------------ |-----------|
-|👩 Ramos     | Xareni   |
-|👩 Castro    | Yanina   |
-|🧑 Bongioanni| Yamil    |
+|👩 Fleitas   | Daniela   |
+|🧑 Bottegani | Luciano   |
+|🧑 Escalante | Marcelo   |
+|🧑 Lombardo  | Wilson    |
 ---
-### Ramos, Xareni
+### Fleitas, Daniela
+Lider FrontEnd
+
+Funciones:
+
+Maquetar templates HTML con Bootstrap/CSS.
+
+Implementar diseño responsive.
+
+Integrar archivos estáticos (JS, CSS, imágenes).
+
+Tareas específicas:
+✔ Mejorar index.html y padre.html (carrusel, navbar).
+✔ Crear formularios con django-crispy-forms.
+✔ Optimizar carga de imágenes en static/.
 ---
 ...
-### Castro, Yanina
+### Escalante, Marcelo
 ---
-Responsable en mayor medida de realizar el maquetado y revisar que las vistas del proyecto tengan la funcionalidad que se pretende.
-### Bongioanni, Yamil
+Autenticación & Base de Datos
+Funciones:
+
+Implementar login/registro (Django allauth o custom).
+
+Gestionar perfiles de usuario.
+
+Configurar PostgreSQL/MySQL (si no usa SQLite).
+
+Tareas específicas:
+✔ Extender el modelo User con Profile.
+✔ Crear vistas de login/logout.
+✔ Migrar datos de prueba con fixtures.
 ---
-Responsable mayormente de realizar la creación de models.py, lógica de formularios y escritura/edición de BBDD mediante los views.py.
+...
+Bottegani, Marcelo
+---
+Testing & Deployment
+Funciones:
 
+Escribir tests unitarios (pytest).
 
+Configurar despliegue (Render, Vercel, Railway).
+
+Monitorear errores en producción.
+
+Tareas específicas:
+✔ Testear vistas y modelos (test_models.py).
+✔ Configurar settings.py para producción (DEBUG=False).
+✔ Dockerizar la app (opcional).
+
+---
+...
+Lombardo, Wilson
+
+BackEnd
+
+Funciones:
+
+Gestionar la arquitectura de Django (models, views, URLs).
+
+Implementar lógica de negocio (ej.: carrito de compras, autenticación).
+
+Coordinar merges en Git y resolver conflictos.
+
+Revisar PRs (Pull Requests) y asegurar consistencia en el código.
+
+Tareas específicas:
+✔ Configurar models.py (Producto, Cliente, Pedido).
+✔ Crear vistas basadas en clases (ListView, CreateView).
+✔ Integrar Django REST Framework (si hay API).
 ---
 
 ### _Applied Technologies_:
@@ -41,7 +99,7 @@ Responsable mayormente de realizar la creación de models.py, lógica de formula
 * Django-environ (v.0.8.1)
 * Html 
 * Css
-* Pillow (v.8.4.0)
+* Pillow (v.10.0.0)
 * Fontawesome (v.6.0.0)
 * Crispy forms (v.1.14.0)
 
