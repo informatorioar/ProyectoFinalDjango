@@ -1,8 +1,43 @@
-# Proyecto Final - Curso Desarrollo Web Python y Django 🐍 INFORMATORIO
+🚀 # Proyecto Final - Curso Desarrollo Web Python y Django 🐍 INFORMATORIO
+ 
+
+¡Bienvenido/a al repositorio del Proyecto Final Django! Un sistema completo y escalable desarrollado con Django para la gestión de clientes, empleados, pedidos y más.  
 
 ## Tienda online - Impresion 3D
 
-El proyecto consiste en la base de una **tienda online** de venta de productos e insumos para impresión 3D.
+🔥 Características principales  
+
+✅ Gestión de Clientes - Registro, consulta y seguimiento de clientes.  
+✅ Administración de Empleados - Control de personal y roles.  
+✅ Pedidos y Ventas - Sistema completo de seguimiento de pedidos.  
+✅ Autenticación Segura - Login, logout y manejo de permisos.  
+✅ Diseño Responsive - Interfaz amigable y adaptable a cualquier dispositivo.  
+
+🛠 Tecnologías utilizadas  
+
+- Python + Django (Backend robusto y escalable)  
+- HTML5, CSS3, Bootstrap (Frontend moderno)  
+- SQLite / PostgreSQL (Base de datos eficiente)  
+- Git (Control de versiones)  
+
+⚡ ¿Cómo empezar?  
+
+1. Clona el repositorio:  
+   git clone https://github.com/WilsonLombardo/ProyectoFinalDjango.git  
+
+2. Configura el entorno virtual:  
+   python -m venv venv  
+   source venv/bin/activate  # Linux/Mac  
+   venv\Scripts\activate     # Windows  
+
+3. Instala las dependencias:  
+   pip install -r requirements.txt  
+
+4. Ejecuta las migraciones:  
+   python manage.py migrate  
+
+5. ¡Inicia el servidor!  
+   python manage.py runserver  
 
 
 
@@ -105,22 +140,5 @@ Tareas específicas:
 
 ---
 
-### _Getting start_:
-
-1. Instalación:
-    * _**Clonar repositorio**_.
-    
-2. Ejecución:
-    * Instalar requirements.txt
-    * Iniciar servidor:
-
-        _Ubicarse en carpeta de proyecto (terminal) y ejecutar **"python manage.py runsever"**_
-
-3. Navegando por la app
-    * La aplicación se inicia en el "home". Desde allí podemos navegar hacia:
-
-        - Nosotros: información (estilo "about us" de la tienda.)
-        - Productos: allí vemos listado de productos (donde podemos modificar/borrar productos existentes, así como también crear nuevos producto).
-        - Clientes: vemos el listado de clientes (estos se generan desde admin/django - BBDD sqlite3).
-        - Contacto: aquí podemos enviar mensaje a la tienda (completando el formulario, este se guarda en la BBDD y además nos responde con el envío de un mail confirmando recepción del mensaje).
+⭐ ¿Te gustó el proyecto? ¡Dale una estrella en GitHub! ⭐  
 
