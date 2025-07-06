@@ -1,0 +1,22 @@
+{% extends "padre.html" %}
+{% block loquecambia %}
+    <form class="form" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}       
+        Artículo: {{form.articulo}}
+        <br>
+        Sección: {{form.seccion}}
+        <br>
+        Descripción: {{form.descripcion}}
+        <br>
+        Precio: {{form.precio_unitario}}
+        <br>
+        Foto: {{form.imagen}}
+        <br>
+        <button type="submit" class="btn btn-success bot-prod crear">Crear</button>
+        <button type="submit" class="btn btn-success bot-prod crear"><a href="{% url 'app:productos' %}" style="color: white; text-decoration: none">Volver atrás</a></button>
+    </form>
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+crossorigin="anonymous"></script>
+{% endblock %}

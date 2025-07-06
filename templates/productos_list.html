@@ -1,0 +1,39 @@
+{% extends "padre.html" %}
+{% block loquecambia %}
+    <h3 class="title-productList"><strong>LISTADO DE PRODUCTOS</strong></h3>
+
+    <div class="bot">
+        <button type="button" class="btn btn-success bot-prod"><a style="color: white; text-decoration: none" href="{%url 'app:crear_producto'%}">Crear producto 📝</a></button>
+        <button type="button" class="btn btn-success bot-prod"><a style="color: white; text-decoration: none" href="{%url 'app:buscar_producto'%}">Buscar artículo 🔍</a></button>
+    </div>
+    
+    <p style="text-align: left;">
+    <div class="list-productos">
+        {%for p in productos%}
+
+        <div class="card" style="width: 18rem; margin: 2em">
+            <div class="card-body">
+                <div class="container-image">
+                    <img src="{{p.imagen.url}}" style="width: 100%; height: 100%; object-fit: cover" class="card-img-top" alt="{{p.articulo}}">
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><p><b>Artículo:</b></p>{{p.articulo}} </li>
+                    <li class="list-group-item"><p><b>Sección:</b></p>{{p.seccion}} </li>
+                    <li class="list-group-item"><p><b>Descripción:</b></p>{{p.descripcion}}</li>
+                    <li class="list-group-item"><p><b>Precio:</b></p> ${{p.precio_unitario}}</li>
+                </ul>
+    
+                <div class="card-body">
+                    <button type="button" class="btn btn-success"><a style="color: white; text-decoration: none" href="{%url 'app:modificar_producto' p.id %}" class="card-link">Modificar</a></button>
+                    <button type="button" class="btn btn-success"><a style="color: white; text-decoration: none" href="{%url 'app:borrar_producto' p.id %}" class="card-link">Eliminar</a></button>
+                </div>
+                
+            </div>
+        </div>
+    {%endfor%}
+</div>
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+crossorigin="anonymous"></script>
+{% endblock %}
