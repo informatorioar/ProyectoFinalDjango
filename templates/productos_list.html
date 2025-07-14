@@ -1,0 +1,48 @@
+{% extends "padre.html" %}
+{% block loquecambia %}
+<div class="container">
+    <h3 class="text-center my-4"><strong>LISTADO DE PELÍCULAS</strong></h3>
+
+    <div class="d-flex justify-content-center gap-3 mb-4">
+        <a href="{% url 'app:crear_producto' %}" class="btn btn-success">Agregar Película 📝</a>
+        <a href="{% url 'app:buscar_producto' %}" class="btn btn-outline-light">Buscar 🔍</a>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for p in productos %}
+        <div class="col">
+            <div class="card h-100">
+                {% if p.imagen %}
+                <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.articulo }}" style="height: 300px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 300px;">
+                    <span class="text-white">Sin portada</span>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ p.articulo }}</h5>
+                    <span class="badge bg-dark mb-2">{{ p.get_seccion_display }}</span>
+                    <p class="card-text">{{ p.descripcion|truncatechars:100 }}</p>
+                    <div class="star-rating mb-3">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= p.precio_unitario %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% else %}
+                                <i class="far fa-star text-warning"></i>
+                            {% endif %}
+                        {% endfor %}
+                        <span class="ms-2">{{ p.precio_unitario }}/5</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-dark">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'app:modificar_producto' p.id %}" class="btn btn-sm btn-outline-light">Editar</a>
+                        <a href="{% url 'app:borrar_producto' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

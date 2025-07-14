@@ -1,0 +1,85 @@
+{% extends "padre.html" %}
+{% load static %} 
+{% block loquecambia %}
+
+<h3 style="text-align: center; margin-top: 1em"><b>SOBRE NOSOTROS</b></h3>
+<section style="display: flex; justify-content: center; align-items: center;">
+    <div class="container-fluid" style="max-width: 1000px; margin: 3em 0 3em 0">
+        <section class="row uno" style="background-color: rgba(241,241,241,0.6); padding:0.5em; border-radius: 10px; margin-top: 3em;">
+            <div class="col-sm-6 col-lg-6 col-xs-12">
+                <img width="90%" src="{% static 'images/nosotros.png' %}" style="padding: 1em" alt="Nosotros">
+            </div>
+            <!-- Sección "Sobre Nosotros" estilo Letterboxd -->
+<div class="col-sm-6 col-lg-6 col-xs-12" style="background-color: #111; padding: 2em; border-radius: 8px; border-left: 4px solid #ffc107;">
+    <h3 style="text-align: center; color: #ffc107; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 1px;">LA CRÍTICA</h3>
+    <p style="text-align: justify; color: #e0e0e0; font-style: italic;">
+        "Desde 2025, somos una comunidad apasionada por el séptimo arte. 
+        Lo que comenzó como un pequeño grupo de cinéfilos se ha convertido 
+        en el punto de encuentro para quienes buscan análisis honestos 
+        y descubrimientos cinematográficos."
+    </p>
+    <p style="color: #bdbdbd; text-align: center; margin-top: 1.5em;">
+        ★ ★ ★ ★ ★
+    </p>
+</div>
+
+<!-- Sección "Qué Hacemos" estilo Letterboxd -->
+<section class="row dos" style="background-color: #111; padding:2em; border-radius: 10px; margin-top: 3em; border-top: 1px solid #333;">
+    <div class="col-sm-6 col-lg-6 col-xs-12">
+        <img width="90%" src="{% static 'images/cinephile.jpg' %}" style="padding: 1em; border-radius: 4px;" alt="Cinephile">
+    </div>
+
+    <div class="col-sm-6 col-lg-6 col-xs-12">
+        <h3 style="text-align: center; color: #ffc107; border-bottom: 1px solid #333; padding-bottom: 0.5em;">NUESTRO ENFOQUE</h3>
+        <p style="text-align: justify; color: #e0e0e0;">
+            Analizamos películas desde múltiples perspectivas: dirección, guión, 
+            fotografía y actuación. Cada reseña sigue un riguroso proceso de:
+        </p>
+        <ul style="color: #bdbdbd; list-style-type: none; padding-left: 0;">
+            <li>✓ Visionado múltiple</li>
+            <li>✓ Análisis técnico</li>
+            <li>✓ Contexto histórico</li>
+            <li>✓ Debate comunitario</li>
+        </ul>
+        <p style="color: #ffc107; text-align: center; font-style: italic;">
+            "El cine no es sólo entretenimiento, es arte en movimiento"
+        </p>
+    </div>
+</section>
+
+<!-- Sección "Catálogo" estilo Letterboxd -->
+<section class="row tres" style="background-color: #111; padding:2em; border-radius: 10px; margin-top: 3em; border-bottom: 1px solid #333;">
+    <div class="col-sm-6 col-lg-6 col-xs-12">
+        <img width="90%" src="{% static 'images/film-reel.jpg' %}" style="padding: 1em; border-radius: 4px;" alt="Film Catalog">
+    </div>
+    
+    <div class="col-sm-6 col-lg-6 col-xs-12">
+        <h3 style="text-align: center; color: #ffc107;">NUESTRO CATÁLOGO</h3>
+        <p style="text-align: justify; color: #e0e0e0;">
+            Cubrimos todo el espectro cinematográfico:
+        </p>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Clásicos</span>
+            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Indie</span>
+            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Oscar</span>
+            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Culto</span>
+        </div>
+        <p style="color: #bdbdbd; margin-top: 1em;">
+            ¿Buscas inspiración? Explora estas plataformas:
+            <br>
+            <a href="https://letterboxd.com/" target="_blank" 
+            style="text-decoration: none; color:#ffc107">🎬 <b>Letterboxd</b></a>
+            <br>
+            <a href="https://www.criterion.com/" target="_blank" 
+            style="text-decoration: none; color:#ffc107">🎞️ <b>Criterion</b></a>
+        </p>
+    </div>
+</section>
+    
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+crossorigin="anonymous"></script>
+        
+{% endblock %}
+

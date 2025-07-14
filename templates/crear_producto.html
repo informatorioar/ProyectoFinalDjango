@@ -1,0 +1,73 @@
+{% extends "padre.html" %}
+{% block loquecambia %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card bg-dark text-light">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Agregar Película</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Película</label>
+                            {{ form.articulo }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Género</label>
+                            {{ form.seccion }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Reseña</label>
+                            {{ form.descripcion }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Puntaje</label>
+                            <div class="star-rating mb-2">
+                                {% for i in "54321" %}
+                                    <input type="radio" id="star{{i}}" name="precio_unitario" value="{{i}}" 
+                                           {% if form.precio_unitario.value == i|add:"0" %}checked{% endif %}>
+                                    <label for="star{{i}}"><i class="fas fa-star"></i></label>
+                                {% endfor %}
+                            </div>
+                            <small class="text-muted">Selecciona de 1 a 5 estrellas</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Portada</label>
+                            {{ form.imagen }}
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <a href="{% url 'app:productos' %}" class="btn btn-outline-light">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .star-rating {
+        direction: rtl;
+        unicode-bidi: bidi-override;
+        display: inline-block;
+    }
+    .star-rating input {
+        display: none;
+    }
+    .star-rating label {
+        color: #ddd;
+        font-size: 1.5rem;
+        padding: 0 3px;
+        cursor: pointer;
+    }
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #ffc107;
+    }
+    .star-rating input:checked + label {
+        color: #ffc107;
+    }
+</style>
+{% endblock %}
