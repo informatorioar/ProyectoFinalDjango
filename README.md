@@ -23,13 +23,21 @@ CineClub es una plataforma web desarrollada con Django para amantes del cine, do
 
 ## Estructura del proyecto
 ProyectoFinalDjango/
+
 ├── static/
+
 │ ├── css/ # Estilos CSS personalizados
+
 │ ├── js/ # JavaScript personalizado
+
 │ ├── images/ # Imágenes del sitio (logo, banners)
+
 │ └── fontawesomefree/ # Iconos Font Awesome
+
 ├── templates/ # Plantillas HTML
+
 │ └── (estructura de templates Django)
+
 └── (otros archivos Django)
 
 
