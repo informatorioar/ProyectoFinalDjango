@@ -5,18 +5,18 @@
 
     {% if productos %}
 
-    <p>Productos encontrados: {{productos|length}} productos</p>
+    <p>Películas encontradas: {{productos|length}} película</p>
     <div class="search_product_list" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">        
         <div class="table-responsive m-2 text-center">       
             <table class="table table-bordered  table-light">
                 <thead class="text-light bg-success">
                     <tr class="font-weight-bold align-middle">
-                    <th class="align-middle" scope="col">Cód. artículo #</th>    
-                    <th class="align-middle" scope="col">Articulo</th>
-                    <th class="align-middle" scope="col">Sección</th>
-                    <th class="align-middle" scope="col">Descripcion</th>
-                    <th class="align-middle" scope="col">Precio</th>
-                    <th class="align-middle" scope="col">Imagen</th>
+                    <th class="align-middle" scope="col">Cód. película #</th>    
+                    <th class="align-middle" scope="col">Película</th>
+                    <th class="align-middle" scope="col">Género</th>
+                    <th class="align-middle" scope="col">Reseña</th>
+                    <th class="align-middle" scope="col">Puntaje</th>
+                    <th class="align-middle" scope="col">Póster</th>
                     </tr>
                 </thead>
                 {% for p in productos %}
@@ -26,7 +26,7 @@
                     <td class="align-middle">{{p.articulo}}</td>
                     <td class="align-middle">{{p.seccion}}</td>
                     <td class="align-middle">{{p.descripcion}}</td>
-                    <td class="align-middle">$ {{p.precio_unitario}}</td>
+                    <td class="align-middle"> {{p.precio_unitario}}</td>
                     <td class="align-middle "><img src="{{p.imagen.url}}" 
                         style="display: block; max-width: 8em; margin: 0; padding: 0;"
                         alt="{{p.articulo}}"></td>
@@ -38,7 +38,7 @@
     </div> 
     {% else %}
     <h2 style="font-size: 3em; text-align: center; margin-top: 3em;">❌</h2>
-    <p style="font-size: 1.5em"><strong>El producto buscado no se encuentra.</strong></p>
+    <p style="font-size: 1.5em"><strong>La película buscada no se encuentra.</strong></p>
     {% endif %} 
 </div>
     
