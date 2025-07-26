@@ -1,6 +1,5 @@
 django==4.0.1
-gunicorn==20.1.0
 django-environ==0.8.1
 fontawesomefree==6.0.0
-pillow==9.5.0  # Downgrade para evitar compilación
-django-crispy-forms==1.14.0
+Pillow==10.0.0
+django_crispy_forms==1.14.0
