@@ -32,7 +32,8 @@ DEBUG=True
 
 ALLOWED_HOSTS = []
 
-
+DEBUG = False
+ALLOWED_HOSTS = ['*']  # Luego lo cambias a tu dominio en Render
 # Application definition
 
 INSTALLED_APPS = [
