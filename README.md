@@ -1,7 +1,7 @@
 # Proyecto Final Informatorio Etapa II Desarrollo Web Django - CineClub
 
 ## Descripción
-CineClub es una plataforma web desarrollada con Django para amantes del cine, donde los usuarios pueden explorar películas, leer reseñas y participar en una comunidad cinéfila. El diseño está inspirado en plataformas como Letterboxd, con un enfoque en la crítica cinematográfica profesional.
+CineClub es una plataforma web desarrollada con Django para amantes del cine, donde los usuarios pueden explorar películas, leer reseñas y participar en una comunidad cinéfila. El diseño está inspirado en plataformas como Letterboxd, con un enfoque en la crítica cinematográfica profesional
 
 ## Características principales
 - Sistema de reseñas con calificación por estrellas (★ ★ ★ ★ ★)
