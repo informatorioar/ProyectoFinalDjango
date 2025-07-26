@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: mi-proyecto-django
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python manage.py migrate
+    startCommand: gunicorn tu_proyecto.wsgi:application
