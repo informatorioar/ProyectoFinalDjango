@@ -1,0 +1,56 @@
+# .github/workflows/pr-checks.yml
+name: Pull Request Checks
+
+on:
+  workflow_dispatch:
+    inputs:
+      debug:
+        required: false
+        type: boolean
+        default: false
+  pull_request:
+    branches:
+      - 'main'
+      - 'dev'
+
+jobs:
+  lint-and-format:
+    name: Lint & Format Check
+    # This job only runs for PRs targeting the 'dev' branch
+    if: github.event.inputs.debug == 'true' || github.base_ref == 'dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Project
+        uses: ./.github/actions/setup
+
+      - name: Run Linter
+        run: uvx ruff check .
+        shell: bash
+
+      - name: Run Formatter Check
+        run: uvx ruff format --check .
+        shell: bash
+
+  test:
+    name: Run Django Tests
+    # This job only runs for PRs targeting the 'main' branch
+    if: github.event.inputs.debug == 'true' || github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Verify source branch is 'dev'"
+        if: ${{ github.head_ref != 'dev' && github.event_name == 'pull_request' }}
+        run: |
+          echo "ERROR: Pull requests to 'main' must come from the 'dev' branch."
+          exit 1
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Project
+        uses: ./.github/actions/setup
+
+      - name: Run Tests
+        run: uv run python manage.py test --verbosity 2
+        shell: bash

@@ -1,0 +1,26 @@
+# .github/actions/setup/action.yml
+name: 'Setup Python Project'
+description: 'Checks out code, sets up Python and uv, and installs dependencies.'
+
+inputs:
+  python-version-file:
+    required: true
+    type: string
+    default: 'pyproject.toml'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: '${{ inputs.python-version-file }}'
+
+    - name: Setup UV
+      uses: astral-sh/setup-uv@v1
+      with:
+        enable-cache: true
+
+    - name: Install Dependencies
+      run: uv sync --all-extras
+      shell: bash
