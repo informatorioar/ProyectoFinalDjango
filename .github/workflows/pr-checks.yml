@@ -1,0 +1,42 @@
+# .github/workflows/pr-checks.yml
+name: PR Checks
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'dev'
+
+jobs:
+  lint-and-format:
+    name: Lint & Format Check
+    # This job only runs for PRs targeting the 'dev' branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Project ( python + uv/uvx)
+        uses: ./.github/actions/setup
+
+      - name: Run Linter
+        run: uvx ruff check .
+        shell: bash
+
+      - name: Run Formatter Check
+        run: uvx ruff format --check .
+        shell: bash
+
+  test:
+    name: Run Django Tests
+    runs-on: ubuntu-latest
+    needs: lint-and-format
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Project
+        uses: ./.github/actions/setup
+
+      - name: Run Tests
+        run: uv run python manage.py test --verbosity 2
+        shell: bash

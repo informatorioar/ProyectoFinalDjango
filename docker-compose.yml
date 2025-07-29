@@ -1,0 +1,50 @@
+# Define the services (containers) for the application
+services:
+  # The Django web application service
+  db-service:
+    # Use the official MySQL 8.0 image
+    env_file:
+      # Load database credentials from the.env file
+      - ./.env
+    # Always restart the container if it stops, unless it was manually stopped
+    healthcheck:
+      # Define a health check to ensure the MySQL server is ready
+      retries: 10
+      test:
+        # Use the MySQL client to check if the server is up and running
+        ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 1s
+    image: mysql:8.0.43
+    ports:
+      - '3306:3306'
+    # For development, you might expose the port to connect with a local GUI client.
+    # For production, it's more secure to not expose the database port publicly.
+    restart: always
+    volumes:
+      # Mount a named volume to persist database data across container restarts
+      - mysql_data:/var/lib/mysql
+
+  # The MySQL database service
+  webapp:
+    # Build the image from the Dockerfile in the current directory
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      # Define a dependency on the 'db' service
+      db-service:
+        # For production, wait until the db service is fully healthy
+        # before starting the webapp. This prevents connection errors on startup.
+        condition: service_healthy
+    env_file:
+      - ./.env
+    ports:
+      # Map port 8000 on the host to port 8000 in the container
+      - '8000:8000'
+    restart: always
+    volumes:
+      - .:/app
+
+# Define the named volumes used by the services
+volumes:
+  mysql_data:

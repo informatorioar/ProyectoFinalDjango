@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import View, UpdateView, DeleteView,ListView
-from .forms import ProductCreateForms,ContactCreateForms,UserRegisterForm,UserEditForm
-from .models import Cliente,Producto,Contacto
+from app.forms import ProductCreateForms,ContactCreateForms,UserRegisterForm,UserEditForm
+from app.models import Cliente,Producto,Contacto
 from django.urls import reverse_lazy
 
 #AGREGADOS PARA EL LOGIN/LOGOUT
@@ -68,7 +68,7 @@ class ProductCreateView(View):
         #parte creada para llamar el contenido del en forms.py (donde generamos producto)
         form = ProductCreateForms()
         context={
-            'form':form    
+            'form':form
         }
         return render(request,'crear_producto.html',context)
     def post(self,request):
@@ -99,7 +99,7 @@ class ProductUpdateView(UpdateView):
     def get_success_url(self):
         pk = self.kwargs['pk']
         return reverse_lazy('app:productos')
-        
+
 
 # Vista de clase que nos permite eliminar un producto
 class ProductDeleteView(DeleteView):
@@ -113,10 +113,10 @@ class ProductDeleteView(DeleteView):
 # Vista de clase - permite crear un nuevo Contacto
 class ContactCreateView(View):
     def get(self,request,*args,**kwargs):
-        #parte creada para llamar el contenido en forms.py 
+        #parte creada para llamar el contenido en forms.py
         form = ContactCreateForms()
         context={
-            'form':form    
+            'form':form
         }
         return render(request,'contacto.html',context)
     def post(self,request):
@@ -130,33 +130,33 @@ class ContactCreateView(View):
                 mensaje = form.cleaned_data.get('mensaje')
 
                 #AGREGADO PARA ENVIO DE MAIL
-                asunto_mail_usuario = 'contacto - lambda3d'                
+                asunto_mail_usuario = 'contacto - lambda3d'
                 mensaje_a_usuario = """
                                     Gracias por contactarte con lambda-3D impresiones.
                                     En breve nos comunicaremos para asesorarte en lo que necesites.
                                     Saludos!
                                     """
-                contenido_mail_usuario = """                   
+                contenido_mail_usuario = """
                                             <html>
                                                 <head></head>
                                                 <body>
                                                     <h2> Hola %s </h2>
-                                                    <p>%s</p>                        
+                                                    <p>%s</p>
                                                 </body>
                                                 <footer style="background-color:rgb(186, 228, 164);">
-                                                    <h5 style="color: white;">nuestro mail: ✉️ %s</h5>                        
+                                                    <h5 style="color: white;">nuestro mail: ✉️ %s</h5>
                                                 </footer>
                                             </html>
                                             """ % (nombre, mensaje_a_usuario, settings.EMAIL_HOST_USER)
                 mail_a_usuario = EmailMessage(asunto_mail_usuario, contenido_mail_usuario, to=[email])
-                mail_a_usuario.content_subtype = "html" # para heredar atributos de formato HTML 
-                
+                mail_a_usuario.content_subtype = "html" # para heredar atributos de formato HTML
+
                 # Si la cuenta de mail HOST se encuetra configurada...
                 try:
                     mail_a_usuario.send()
                     msg_alerta = ""
 
-                # caso contrario, enviará el mensaje...    
+                # caso contrario, enviará el mensaje...
                 except:
                     msg_alerta = """
                                Para que la página envíe mail al usuario, se debe configurar cuenta de mail HOST en 'settings.py'.
@@ -164,7 +164,7 @@ class ContactCreateView(View):
                                'EMAIL_HOST_USER = cuenta de mail válida.'\n
                                'EMAIL_HOST_PASSWORD = contraseña de la cuenta.'
                                """
-                
+
                 c, created = Contacto.objects.get_or_create(nombre=nombre,email=email,telefono=telefono,asunto=asunto,mensaje=mensaje)
                 c.save()
                 msg = {'mensaje': f'Gracias "{nombre}". Hemos recibido tu mensaje!!. \n{msg_alerta}'}
@@ -178,7 +178,7 @@ class ContactCreateView(View):
 #------------------------------------------------------------------------------
 
 # VISTAS DE LOGIN
-# Vista de función (def) - Login usuarios 
+# Vista de función (def) - Login usuarios
 def login_request(request):
         if request.method == "POST":
                 form = AuthenticationForm(request,data = request.POST)
@@ -196,11 +196,11 @@ def login_request(request):
                         else:
                                 msg = {"mensaje": "Error, datos incorrectos."}
                                 return render(request,"resultado_login.html",msg)
-                
+
                 else:
                         msg = {"mensaje": "Error, datos incorrectos."}
                         return render(request,"resultado_login.html",msg)
-        
+
         form = AuthenticationForm()
 
         return render(request,"login.html",{'form':form})
@@ -215,10 +215,10 @@ def register(request):
                         form.save()
                         msg = {'mensaje': f'Usuario "{username}" creado con éxito!!'}
                         return render(request,"resultado_registro.html",msg)
-        
+
         else:
                 form = UserRegisterForm()
-        
+
         return render(request,'registro.html',{'form':form})
 
 

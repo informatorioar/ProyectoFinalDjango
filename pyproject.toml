@@ -1,0 +1,133 @@
+[project]
+    dependencies = [
+        "crispy-bootstrap4>=2025.6",
+        "django-crispy-forms>=2.4",
+        "django-environ>=0.12.0",
+        "django>=5.2.4",
+        "fontawesomefree>=6.6.0",
+        "pillow>=11.3.0",
+    ]
+    description = "Proyecto final del curso de Django en Informatorio AR"
+    name = "proyectofinaldjango"
+    requires-python = ">=3.13"
+    version = "0.0.1"
+
+[dependency-groups]
+    dev = [
+        "coverage>=7.10.1",    # For measuring code coverage
+        "django-stubs>=5.2.2", # Type hints for Django
+        "ruff>=0.12.5",        # The linter and formatter
+        "ty>=0.0.1a16",        # Type checker for Python
+    ]
+
+# Ruff is your all-in-one tool for linting, formatting, and import sorting.
+# A robust Ruff config for Python beginners.
+# See all options: https://docs.astral.sh/ruff/configuration/
+[tool.ruff]
+    # Your project's Python version
+    line-length    = 88
+    target-version = "py313"
+
+    # A more comprehensive list of folders to ignore.
+    exclude = [
+        ".bzr",
+        ".direnv",
+        ".eggs",
+        ".git",
+        ".hg",
+        ".mypy_cache",
+        ".nox",
+        ".pants.d",
+        ".pytest_cache",
+        ".ruff_cache",
+        ".svn",
+        ".tox",
+        ".venv",
+        "__pypackages__",
+        "_build",
+        "build",
+        "dist",
+        "migrations",
+        "node_modules",
+        "staticfiles",
+        "venv",
+    ]
+
+# ---------------- Linter Settings ----------------
+[tool.ruff.lint]
+    # A more robust selection of rules. New ones are commented below.
+    # C90 (mccabe):   Checks for code complexity. Helps keep functions simple.
+    # D (pydocstyle): Enforces docstring conventions. Great for building good habits.
+    # S (bandit):     Finds common security issues.
+    # ERA (eradicate):Removes commented-out code to keep your project clean.
+    # RUF:            Ruff-specific rules for performance and clarity.
+    select = [
+        "A",   # flake8-builtins
+        "B",   # flake8-bugbear
+        "C90", # mccabe
+        "D",   # pydocstyle
+        "E",   # pycodestyle (errors)
+        "ERA", # eradicate
+        "F",   # pyflakes
+        "I",   # isort
+        "N",   # pep8-naming
+        "Q",   # flake8-quotes
+        "RUF", # Ruff-specific rules
+        "S",   # flake8-bandit
+        "SIM", # flake8-simplify
+        "T",   # flake8-print & debugger
+        "UP",  # pyupgrade
+    ]
+
+    # Start by ignoring some docstring rules to not get overwhelmed.
+    # You can remove these later as you add docstrings to your project.
+    # D100: Missing docstring in public module
+    # D104: Missing docstring in public package
+    # D107: Missing docstring in __init__
+    ignore = ["D100", "D104", "D107"]
+
+# ---------------- Formatter Settings ----------------
+[tool.ruff.format]
+    # This section makes ruff format your code like the 'black' tool would.
+    quote-style = "double"
+
+    # Also formats code examples inside your docstrings. ✨
+    docstring-code-format = true
+
+# ---------------- Rule Overrides for Specific Files ----------------
+[tool.ruff.lint.per-file-ignores]
+    # In tests, it's common to use 'assert' and have shorter docstrings.
+    "tests/**/*.py" = ["D101", "D102", "D103", "S101"]
+
+[tool.ty.environment]
+    python         = "./.venv"
+    python-version = "3.13"
+
+[tool.ty.rules]
+    division-by-zero              = "warn"
+    possibly-unresolved-reference = "warn"
+
+[tool.django-stubs]
+    django_settings_module = "core.settings.dev"
+
+# The coverage tool can be run with unittest directly.
+# Example: coverage run -m unittest discover && coverage report
+[tool.coverage.run]
+    # Enable branch coverage measurement
+    branch = true
+    # Specify the source code to measure coverage against
+    source = ["app", "core"]
+    # Omit test files from the coverage report
+    omit = ["*/migrations/*", "*/tests/*", "manage.py"]
+
+[tool.coverage.report]
+    # Fail the test run if total coverage is below 90%
+    fail_under = 70
+    # Show missing line numbers in the terminal report
+    show_missing = true
+    # Do not report on files with 100% coverage in the terminal
+    skip_covered = true
+
+[tool.coverage.xml]
+    # Specify the output file for the XML report
+    output = "coverage.xml"
