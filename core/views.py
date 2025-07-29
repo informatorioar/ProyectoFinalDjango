@@ -3,9 +3,8 @@ from django.shortcuts import render
 
 # vista de función (def) - Vista de Inicio de nuestro página/blog
 def HomeView(request):
-        context = {
+    context = {}
+    return render(request, "index.html", context)
 
-        }
-        return render(request,'index.html',context)
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
+
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -12,22 +13,22 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+
 """
-from django.contrib import admin
-from django.urls import path,include
-# VISTAS LOGIN_REQUEST Y REGISTER AGREGAR EN VERSION FINAL!!
-from .views import HomeView
 
 # AGREGADOS PARA VER IMAGENS EN NUESTRAS WEB!!
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
 
+# VISTAS LOGIN_REQUEST Y REGISTER AGREGAR EN VERSION FINAL!!
+from core.views import HomeView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',HomeView,name="inicio"),    # llamamos nuestra página de inicio - "hOME"
-    path('app/',include('app.urls')),   # incluímos url's de la app
-
+    path("admin/", admin.site.urls),
+    path("", HomeView, name="inicio"),  # llamamos nuestra página de inicio - "hOME"
+    path("app/", include("app.urls")),  # incluímos url's de la app
 ]
 
 if settings.DEBUG:
