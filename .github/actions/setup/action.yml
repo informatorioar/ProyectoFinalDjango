@@ -1,15 +1,14 @@
 # .github/actions/setup/action.yml
-name: 'Setup Python Project'
 description: 'Checks out code, sets up Python and uv, and installs dependencies.'
-
 inputs:
   python-version-file:
-    required: true
-    type: string
     default: 'pyproject.toml'
+    deprecationMessage: string
+    description: 'Path to the Python version file (e.g., pyproject.toml, .python-version)'
+    required: true
 
+name: 'Setup Python Project'
 runs:
-  using: 'composite'
   steps:
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -24,3 +23,4 @@ runs:
     - name: Install Dependencies
       run: uv sync --all-extras
       shell: bash
+  using: 'composite'
