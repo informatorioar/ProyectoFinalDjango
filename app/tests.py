@@ -1,7 +1,9 @@
-import unittest
+from django.test import TestCase
 
 
-class SampleTestCase(unittest.TestCase):
+class SampleTestCase(TestCase):
+    """A simple test case to demonstrate unittest functionality."""
+
     def test_example(self):
         self.assertEqual(1 + 1, 2)
 
