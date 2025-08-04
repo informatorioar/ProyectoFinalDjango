@@ -62,8 +62,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 # Ignore all migration files except the initial one
-app/migrations/
-!app/migrations/__init__.py
+**/migrations/
+!**/migrations/__init__.py
 # Ignore all migrations except the initial one
 
 # Flask stuff:
