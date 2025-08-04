@@ -4,8 +4,8 @@
         "django-crispy-forms>=2.4",
         "django-environ>=0.12.0",
         "django>=5.2.4",
-        "fontawesomefree>=6.6.0",
-        "mysqlclient>=2.2.6",
+        # "fontawesomefree>=6.6.0",
+        # "mysqlclient>=2.2.6",
         "pillow>=11.3.0",
     ]
     description = "Proyecto final del curso de Django en Informatorio AR"

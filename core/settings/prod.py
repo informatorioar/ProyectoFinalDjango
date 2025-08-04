@@ -2,9 +2,10 @@
 
 from os import getenv
 
+from environ import env
+
 from core.settings.base import *  # noqa: F403
 
-from environ import
 # --- Security ---
 # Get SECRET_KEY, DEBUG, and ALLOWED_HOSTS from environment variables.
 SECRET_KEY = env("SECRET_KEY")
