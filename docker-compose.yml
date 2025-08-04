@@ -6,6 +6,11 @@ services:
     env_file:
       # Load database credentials from the.env file
       - ./.env
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      # MYSQL_USER: ${MYSQL_USER}
     # Always restart the container if it stops, unless it was manually stopped
     healthcheck:
       # Define a health check to ensure the MySQL server is ready
