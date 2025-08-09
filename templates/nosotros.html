@@ -2,84 +2,123 @@
 {% load static %} 
 {% block loquecambia %}
 
-<h3 style="text-align: center; margin-top: 1em"><b>SOBRE NOSOTROS</b></h3>
-<section style="display: flex; justify-content: center; align-items: center;">
-    <div class="container-fluid" style="max-width: 1000px; margin: 3em 0 3em 0">
-        <section class="row uno" style="background-color: rgba(241,241,241,0.6); padding:0.5em; border-radius: 10px; margin-top: 3em;">
-            <div class="col-sm-6 col-lg-6 col-xs-12">
-                <img width="90%" src="{% static 'images/nosotros.jpg' %}" style="padding: 1em" alt="Nosotros">
+<!-- Título principal con efecto luminoso -->
+<h3 style="text-align: center; margin-top: 1em; font-size: 2.5rem; color: #ffc107; text-shadow: 0 0 10px rgba(255, 193, 7, 0.5); letter-spacing: 2px; padding-top: 1em;">
+    <b>SOBRE NOSOTROS</b>
+</h3>
+
+<!-- Contenedor principal -->
+<section style="display: flex; justify-content: center; align-items: center; background-color: #000000; padding: 2em 0;">
+    <div class="container-fluid" style="max-width: 1200px; margin: 3em 0;">
+        <!-- Sección 1 - La Crítica -->
+        <section class="row" style="background-color: #111; padding:1.5em; border-radius: 15px; margin-top: 3em; box-shadow: 0 5px 15px rgba(255,193,7,0.1); border-left: 5px solid #ffc107;">
+            <div class="col-sm-6 col-lg-6 col-xs-12" style="display: flex; align-items: center; justify-content: center;">
+                <img width="85%"src="{% static 'images/llaveritos.png' %}"x; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 2px solid #ffc107;" alt="Nosotros">
             </div>
-            <!-- Sección "Sobre Nosotros" estilo Letterboxd -->
-<div class="col-sm-6 col-lg-6 col-xs-12" style="background-color: #111; padding: 2em; border-radius: 8px; border-left: 4px solid #ffc107;">
-    <h3 style="text-align: center; color: #ffc107; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 1px;">LA CRÍTICA</h3>
-    <p style="text-align: justify; color: #e0e0e0; font-style: italic;">
-        "Desde 2025, somos una comunidad apasionada por el séptimo arte. 
-        Lo que comenzó como un pequeño grupo de cinéfilos se ha convertido 
-        en el punto de encuentro para quienes buscan análisis honestos 
-        y descubrimientos cinematográficos."
-    </p>
-    <p style="color: #bdbdbd; text-align: center; margin-top: 1.5em;">
-        ★ ★ ★ ★ ★
-    </p>
-</div>
+            
+            <div class="col-sm-6 col-lg-6 col-xs-12" style="padding: 2em;">
+                <h3 style="text-align: center; color: #ffc107; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 2px; margin-bottom: 1.5em; font-size: 1.8rem; text-transform: uppercase;">
+                    LA CRÍTICA
+                </h3>
+                <p style="text-align: justify; color: #e0e0e0; font-style: italic; font-size: 1.1rem; line-height: 1.6;">
+                    "Desde 2025, somos una comunidad apasionada por el séptimo arte. 
+                    Lo que comenzó como un pequeño grupo de cinéfilos se ha convertido 
+                    en el punto de encuentro para quienes buscan análisis honestos 
+                    y descubrimientos cinematográficos."
+                </p>
+                <div style="text-align: center; margin-top: 2em;">
+                    <div style="color: #ffc107; font-size: 1.8rem; letter-spacing: 5px;">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <small style="color: #bdbdbd; font-style: italic;">Calificación de la comunidad</small>
+                </div>
+            </div>
+        </section>
 
-<!-- Sección "Qué Hacemos" estilo Letterboxd -->
-<section class="row dos" style="background-color: #111; padding:2em; border-radius: 10px; margin-top: 3em; border-top: 1px solid #333;">
-    <div class="col-sm-6 col-lg-6 col-xs-12">
-        <img width="90%" src="{% static 'images/cinephile.jpg' %}" style="padding: 1em; border-radius: 4px;" alt="Cinephile">
-    </div>
+        <!-- Sección 2 - Nuestro Enfoque -->
+        <section class="row" style="background-color: #111; padding:2.5em; border-radius: 15px; margin-top: 4em; border-top: 2px solid #333; box-shadow: 0 5px 15px rgba(255,193,7,0.1);">
+            <div class="col-sm-6 col-lg-6 col-xs-12" style="display: flex; align-items: center; justify-content: center;">
+                <img width="85%" src="{% static 'images/cinephile.jpg' %}" style="padding: 1em; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 2px solid #ffc107;" alt="Cinephile">
+            </div>
 
-    <div class="col-sm-6 col-lg-6 col-xs-12">
-        <h3 style="text-align: center; color: #ffc107; border-bottom: 1px solid #333; padding-bottom: 0.5em;">NUESTRO ENFOQUE</h3>
-        <p style="text-align: justify; color: #e0e0e0;">
-            Analizamos películas desde múltiples perspectivas: dirección, guión, 
-            fotografía y actuación. Cada reseña sigue un riguroso proceso de:
-        </p>
-        <ul style="color: #bdbdbd; list-style-type: none; padding-left: 0;">
-            <li>✓ Visionado múltiple</li>
-            <li>✓ Análisis técnico</li>
-            <li>✓ Contexto histórico</li>
-            <li>✓ Debate comunitario</li>
-        </ul>
-        <p style="color: #ffc107; text-align: center; font-style: italic;">
-            "El cine no es sólo entretenimiento, es arte en movimiento"
-        </p>
+            <div class="col-sm-6 col-lg-6 col-xs-12" style="padding: 0 1.5em;">
+                <h3 style="text-align: center; color: #ffc107; border-bottom: 2px solid #333; padding-bottom: 0.8em; margin-bottom: 1.5em; font-size: 1.8rem; text-transform: uppercase;">
+                    NUESTRO ENFOQUE
+                </h3>
+                <p style="text-align: justify; color: #e0e0e0; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5em;">
+                    Analizamos películas desde múltiples perspectivas: dirección, guión, 
+                    fotografía y actuación. Cada reseña sigue un riguroso proceso de:
+                </p>
+                <ul style="color: #bdbdbd; list-style-type: none; padding-left: 0; font-size: 1.1rem;">
+                    <li style="margin-bottom: 1em; padding-left: 1.5em; position: relative;">
+                        <span style="position: absolute; left: 0; color: #ffc107;">✓</span> 
+                        <strong style="color: #ffc107;">Visionado múltiple</strong> - Para captar cada detalle
+                    </li>
+                    <li style="margin-bottom: 1em; padding-left: 1.5em; position: relative;">
+                        <span style="position: absolute; left: 0; color: #ffc107;">✓</span> 
+                        <strong style="color: #ffc107;">Análisis técnico</strong> - Más allá de la primera impresión
+                    </li>
+                    <li style="margin-bottom: 1em; padding-left: 1.5em; position: relative;">
+                        <span style="position: absolute; left: 0; color: #ffc107;">✓</span> 
+                        <strong style="color: #ffc107;">Contexto histórico</strong> - Entendiendo la obra en su época
+                    </li>
+                    <li style="margin-bottom: 1em; padding-left: 1.5em; position: relative;">
+                        <span style="position: absolute; left: 0; color: #ffc107;">✓</span> 
+                        <strong style="color: #ffc107;">Debate comunitario</strong> - Diversidad de perspectivas
+                    </li>
+                </ul>
+                <p style="color: #ffc107; text-align: center; font-style: italic; font-size: 1.2rem; margin-top: 2em; padding: 0.5em; border-top: 1px solid #333;">
+                    "El cine no es sólo entretenimiento, es arte en movimiento"
+                </p>
+            </div>
+        </section>
+
+        <!-- Sección 3 - Catálogo -->
+        <section class="row" style="background-color: #111; padding:2.5em; border-radius: 15px; margin-top: 4em; border-bottom: 2px solid #333; box-shadow: 0 5px 15px rgba(255,193,7,0.1);">
+            <div class="col-sm-6 col-lg-6 col-xs-12" style="display: flex; align-items: center; justify-content: center;">
+                <img width="85%" src="{% static 'images/film-reel.jpg' %}" style="padding: 1em; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 2px solid #ffc107;" alt="Film Catalog">
+            </div>
+            
+            <div class="col-sm-6 col-lg-6 col-xs-12" style="padding: 0 1.5em;">
+                <h3 style="text-align: center; color: #ffc107; font-size: 1.8rem; margin-bottom: 1.5em; text-transform: uppercase;">
+                    NUESTRO CATÁLOGO
+                </h3>
+                <p style="text-align: justify; color: #e0e0e0; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5em;">
+                    Cubrimos todo el espectro cinematográfico:
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.8em; margin-bottom: 2em;">
+                    <span style="color: #ffc107; background: rgba(255, 193, 7, 0.1); padding: 0.5em 1em; border-radius: 20px; border: 1px solid #ffc107; font-size: 0.9rem; transition: all 0.3s ease;">
+                        #Clásicos
+                    </span>
+                    <span style="color: #ffc107; background: rgba(255, 193, 7, 0.1); padding: 0.5em 1em; border-radius: 20px; border: 1px solid #ffc107; font-size: 0.9rem; transition: all 0.3s ease;">
+                        #Indie
+                    </span>
+                    <span style="color: #ffc107; background: rgba(255, 193, 7, 0.1); padding: 0.5em 1em; border-radius: 20px; border: 1px solid #ffc107; font-size: 0.9rem; transition: all 0.3s ease;">
+                        #Oscar
+                    </span>
+                    <span style="color: #ffc107; background: rgba(255, 193, 7, 0.1); padding: 0.5em 1em; border-radius: 20px; border: 1px solid #ffc107; font-size: 0.9rem; transition: all 0.3s ease;">
+                        #Culto
+                    </span>
+                </div>
+                <div>
+                    <p style="color: #bdbdbd; margin-bottom: 1em; font-size: 1.1rem;">
+                        ¿Buscas inspiración? Explora estas plataformas:
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1em;">
+                        <a href="https://letterboxd.com/" target="_blank" style="text-decoration: none; color:#ffc107; display: inline-flex; align-items: center; gap: 0.5em; padding: 0.5em 1em; border: 1px solid #ffc107; border-radius: 5px; transition: all 0.3s ease;">
+                            <span style="font-size: 1.2rem;">🎬</span> <b>Letterboxd</b>
+                        </a>
+                        <a href="https://www.criterion.com/" target="_blank" style="text-decoration: none; color:#ffc107; display: inline-flex; align-items: center; gap: 0.5em; padding: 0.5em 1em; border: 1px solid #ffc107; border-radius: 5px; transition: all 0.3s ease;">
+                            <span style="font-size: 1.2rem;">🎞️</span> <b>Criterion</b>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </section>
 
-<!-- Sección "Catálogo" estilo Letterboxd -->
-<section class="row tres" style="background-color: #111; padding:2em; border-radius: 10px; margin-top: 3em; border-bottom: 1px solid #333;">
-    <div class="col-sm-6 col-lg-6 col-xs-12">
-        <img width="90%" src="{% static 'images/film-reel.jpg' %}" style="padding: 1em; border-radius: 4px;" alt="Film Catalog">
-    </div>
-    
-    <div class="col-sm-6 col-lg-6 col-xs-12">
-        <h3 style="text-align: center; color: #ffc107;">NUESTRO CATÁLOGO</h3>
-        <p style="text-align: justify; color: #e0e0e0;">
-            Cubrimos todo el espectro cinematográfico:
-        </p>
-        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Clásicos</span>
-            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Indie</span>
-            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Oscar</span>
-            <span style="color: #bdbdbd; background: #222; padding: 0.3em 0.6em; border-radius: 20px; margin: 0.3em;">#Culto</span>
-        </div>
-        <p style="color: #bdbdbd; margin-top: 1em;">
-            ¿Buscas inspiración? Explora estas plataformas:
-            <br>
-            <a href="https://letterboxd.com/" target="_blank" 
-            style="text-decoration: none; color:#ffc107">🎬 <b>Letterboxd</b></a>
-            <br>
-            <a href="https://www.criterion.com/" target="_blank" 
-            style="text-decoration: none; color:#ffc107">🎞️ <b>Criterion</b></a>
-        </p>
-    </div>
-</section>
-    
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
 {% endblock %}
 
