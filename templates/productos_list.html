@@ -7,15 +7,17 @@
         <a href="{% url 'app:crear_producto' %}" class="btn btn-success">Agregar Película 📝</a>
         <a href="{% url 'app:buscar_producto' %}" class="btn btn-outline-light">Buscar 🔍</a>
     </div>
-    
+
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for p in productos %}
         <div class="col">
             <div class="card h-100">
                 {% if p.imagen %}
-                <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.articulo }}" style="height: 300px; object-fit: cover;">
+                <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.articulo }}"
+                    style="height: 300px; object-fit: cover;">
                 {% else %}
-                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 300px;">
+                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center"
+                    style="height: 300px;">
                     <span class="text-white">Sin portada</span>
                 </div>
                 {% endif %}
@@ -25,19 +27,24 @@
                     <p class="card-text">{{ p.descripcion|truncatechars:100 }}</p>
                     <div class="star-rating mb-3">
                         {% for i in "12345" %}
-                            {% if forloop.counter <= p.precio_unitario %}
-                                <i class="fas fa-star text-warning"></i>
+                        {% if forloop.counter <= p.precio_unitario %} <i class="fas fa-star text-warning"></i>
                             {% else %}
-                                <i class="far fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
                             {% endif %}
-                        {% endfor %}
-                        <span class="ms-2">{{ p.precio_unitario }}/5</span>
+                            {% endfor %}
+                            <span class="ms-2">{{ p.precio_unitario }}/5</span>
                     </div>
                 </div>
                 <div class="card-footer bg-dark">
                     <div class="d-flex justify-content-between">
-                        <a href="{% url 'app:modificar_producto' p.id %}" class="btn btn-sm btn-outline-light">Editar</a>
-                        <a href="{% url 'app:borrar_producto' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                        {% if user.is_superuser or user == p.autor %}
+                        <a href="{% url 'app:modificar_producto' p.id %}"
+                            class="btn btn-sm btn-outline-light">Editar</a>
+                        <a href="{% url 'app:borrar_producto' p.id %}"
+                            class="btn btn-sm btn-outline-danger">Eliminar</a>
+                        {% else %}
+                        <small class="text-muted">Solo el autor puede editar</small>
+                        {% endif %}
                     </div>
                 </div>
             </div>

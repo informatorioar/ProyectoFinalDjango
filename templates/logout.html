@@ -1,0 +1,32 @@
+{% extends "padre.html" %}
+{% load crispy_forms_tags %}
+{% block loquecambia %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h2 class="card-title mb-4">Cierre de sesión exitoso</h2>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}  alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <p class="mb-4">Has cerrado tu sesión correctamente. ¿Quiéres volver a iniciar sesión?</p>
+
+                    <a href="{% url 'login' %}" class="btn btn-primary me-2">Iniciar sesión nuevamente</a>
+
+                    <a href="#">Ir a la página principal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

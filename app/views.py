@@ -1,14 +1,20 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import View, UpdateView, DeleteView,ListView
-from app.forms import ProductCreateForms,ContactCreateForms,UserRegisterForm,UserEditForm
-from app.models import Cliente,Producto,Contacto
-from django.urls import reverse_lazy
+from django.views.generic import View, UpdateView, DeleteView, ListView, CreateView
+from app.forms import ProductCreateForms, ContactCreateForms, UserRegisterForm, UserEditForm
+from app.models import Producto, Contacto, NuevoUsuario
+from django.urls import reverse, reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView
 
 #AGREGADOS PARA EL LOGIN/LOGOUT
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 #AGREGADO PARA EL ENVIO DE MAIL
 from django.core.mail import EmailMessage
@@ -16,15 +22,46 @@ from django.conf import settings
 
 #----------------------------------------------------------------------------------------------
 
+## VISTA PARA REGISTRAR USUARIO
+class RegistrarUsuario(CreateView):
+    template_name = 'registro.html'
+    form_class = UserRegisterForm
+    success_url = reverse_lazy('app:login')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        try:
+            group = Group.objects.get(name='Registrado')
+            self.object.groups.add(group)
+            messages.success(self.request, 'Registro exitoso. Puede iniciar sesión.')
+
+        except Group.DoesNotExist:
+            messages.warning(self.request, 'Registro exitoso, pero no se pudo asignar grupo.')
+        return redirect(self.get_success_url()) 
+
+#----------------------------------------------------------------------------------------------
+
+## VISTA PARA LOGOUT
+class LogoutView(LogoutView):
+    template_name = 'logout.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.success(request, 'Logout exitoso')
+        return response
+
+#----------------------------------------------------------------------------------------------
+
 ## VISTAS DE CLIENTE
 # Vista de Clase que lista los clientes
-class ClientListView(ListView):
-    def get(self,request):
-        clientes = Cliente.objects.all()
-        context = {
-            'clientes':clientes
-        }
-        return render(request,'clientes_list.html',context)
+# class ClientListView(ListView):
+#     def get(self,request):
+#         clientes = Cliente.objects.all()
+#         context = {
+#             'clientes':clientes
+#         }
+#         return render(request,'clientes_list.html',context)
 
 #----------------------------------------------------------------------------------------------
 
@@ -63,31 +100,33 @@ def ToFindProductView(request):
 
 
 # Vista de clase - permite crear un nuevo Producto
+@method_decorator(login_required, name='dispatch')
 class ProductCreateView(View):
-    def get(self,request,*args,**kwargs):
-        #parte creada para llamar el contenido del en forms.py (donde generamos producto)
+    def get(self, request, *args, **kwargs):
         form = ProductCreateForms()
-        context={
-            'form':form
+        context = {
+            'form': form
         }
-        return render(request,'crear_producto.html',context)
-    def post(self,request):
-        if request.method=="POST":
-            form = ProductCreateForms(request.POST,request.FILES)
+        return render(request, 'crear_producto.html', context)
+    
+    def post(self, request):
+        if request.method == "POST":
+            form = ProductCreateForms(request.POST, request.FILES)
             if form.is_valid():
-                articulo = form.cleaned_data.get('articulo')
-                seccion = form.cleaned_data.get('seccion')
-                descripcion = form.cleaned_data.get('descripcion')
-                precio_unitario = form.cleaned_data.get('precio_unitario')
-                imagen = form.cleaned_data.get('imagen')
-
-                p, created = Producto.objects.get_or_create(articulo=articulo,seccion=seccion,descripcion=descripcion,precio_unitario=precio_unitario,imagen=imagen)
-                p.save()
+                # Crear instancia sin guardar aún
+                producto = form.save(commit=False)
+                # Asignar el usuario actual como autor
+                producto.autor = request.user
+                # Ahora guardar en la base de datos
+                producto.save()
+                
+                messages.success(request, 'Post creado exitosamente!')
                 return redirect('app:productos')
 
         context = {
+            'form': form
         }
-        return render(request,'crear_producto.html',context)
+        return render(request, 'crear_producto.html', context)
 
 
 # Vista de clase que permite modificar (update) nuestro producto
@@ -96,8 +135,13 @@ class ProductUpdateView(UpdateView):
     fields = ['articulo','seccion','descripcion','precio_unitario','imagen']
     template_name = 'modifcar_producto.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        producto = self.get_object()
+        if not (request.user.is_superuser or request.user == producto.autor):
+            raise PermissionDenied('No tienes permiso para editar este post')
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
-        pk = self.kwargs['pk']
         return reverse_lazy('app:productos')
 
 
@@ -106,6 +150,12 @@ class ProductDeleteView(DeleteView):
     model = Producto
     template_name = 'borrar_producto.html'
     success_url = reverse_lazy('app:productos')
+
+    def dispatch(self, request, *args, **kwargs):
+        producto = self.get_object()
+        if not (request.user.is_superuser or request.user == producto.autor):
+            raise PermissionDenied('No tienes permiso para eliminar este post')
+        return super().dispatch(request, *args, **kwargs)
 
 #----------------------------------------------------------------------------------------------
 
@@ -207,19 +257,19 @@ def login_request(request):
 
 
 # Vista para registro de usuario (crear nuevo)
-def register(request):
-        if request.method == "POST":
-                form = UserRegisterForm(request.POST)
-                if form.is_valid():
-                        username = form.cleaned_data['username']
-                        form.save()
-                        msg = {'mensaje': f'Usuario "{username}" creado con éxito!!'}
-                        return render(request,"resultado_registro.html",msg)
+# def register(request):
+#         if request.method == "POST":
+#                 form = UserRegisterForm(request.POST)
+#                 if form.is_valid():
+#                         username = form.cleaned_data['username']
+#                         form.save()
+#                         msg = {'mensaje': f'Usuario "{username}" creado con éxito!!'}
+#                         return render(request,"resultado_registro.html",msg)
 
-        else:
-                form = UserRegisterForm()
+#         else:
+#                 form = UserRegisterForm()
 
-        return render(request,'registro.html',{'form':form})
+#         return render(request,'registro.html',{'form':form})
 
 
 # Vista de editar el perfil

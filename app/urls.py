@@ -8,7 +8,7 @@ app_name = 'app'
 
 urlpatterns = [
     
-    path('clientes/',ClientListView.as_view(),name="clientes"),
+    # path('clientes/',ClientListView.as_view(),name="clientes"),
     path('productos/',ProductListView.as_view(),name="productos"),
     path('buscar_producto/',SearchProductView,name="buscar_producto"),
     path('producto_buscado/',ToFindProductView,name='producto_buscado'),
@@ -17,9 +17,9 @@ urlpatterns = [
     path('<int:pk>/modificar/',ProductUpdateView.as_view(),name="modificar_producto"),
     path('<int:pk>/delete/',ProductDeleteView.as_view(),name="borrar_producto"),
     path('login',login_request,name="login"),                                           
-    path('registro',register,name="registro"),                                          
+    path('registro/', RegistrarUsuario.as_view(), name="registro"),                                          
     path('editar_perfil', EditProfile,name="editar_perfil"),                    
-    path('logout',LogoutView.as_view(),name="logout"),                          
+    path('logout/', LogoutView.as_view(next_page='app:login'), name="logout"),                          
     path('nosotros/',AboutUsView,name="nosotros"),                              
 
     

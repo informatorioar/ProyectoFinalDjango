@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-4!@#%&*()_+abc1234567890'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'app',
     'fontawesomefree',
     'crispy_forms',
+    'crispy_bootstrap4',
 ]
+
+AUTH_USER_MODEL = 'app.NuevoUsuario'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -138,7 +141,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
 # Crispy Forms Template
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -149,3 +152,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+
+
+LOGIN_URL = 'app:login'
