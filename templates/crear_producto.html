@@ -47,27 +47,116 @@
 </div>
 
 <style>
-    .star-rating {
-        direction: rtl;
-        unicode-bidi: bidi-override;
-        display: inline-block;
-    }
-    .star-rating input {
-        display: none;
-    }
-    .star-rating label {
-        color: #ddd;
-        font-size: 1.5rem;
-        padding: 0 3px;
-        cursor: pointer;
-    }
-    .star-rating input:checked ~ label,
-    .star-rating label:hover,
-    .star-rating label:hover ~ label {
-        color: #ffc107;
-    }
-    .star-rating input:checked + label {
-        color: #ffc107;
-    }
+
+.container.py-4 { padding-top: 2.25rem; padding-bottom: 2.25rem; }
+.card.bg-dark {
+  background: linear-gradient(180deg, #0f0f0f 0%, #141414 100%);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+.card-body { padding: 1.6rem; }
+
+
+.card-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+   color: #ffc107; 
+  letter-spacing: 0.2px;
+}
+
+
+.form-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+  color: #e9ecef;
+  font-size: 0.95rem;
+}
+
+
+.card.bg-dark input[type="text"],
+.card.bg-dark input[type="file"],
+.card.bg-dark input[type="email"],
+.card.bg-dark input[type="number"],
+.card.bg-dark select,
+.card.bg-dark textarea {
+  width: 100%;
+  background: #1b1b1b;
+  color: #f8f9fa;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  transition: border-color .14s ease, box-shadow .14s ease, transform .06s ease;
+  font-size: 0.95rem;
+}
+.card.bg-dark textarea { min-height: 120px; resize: vertical; }
+
+.card.bg-dark input:focus,
+.card.bg-dark select:focus,
+.card.bg-dark textarea:focus {
+  outline: none;
+  border-color: rgba(40,167,69,0.9);
+  box-shadow: 0 0 0 5px rgba(40,167,69,0.06);
+  transform: translateY(-1px);
+}
+
+.star-rating {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.star-rating input { display: none; }
+.star-rating label {
+  color: #6c757d;
+  font-size: 1.6rem;
+  padding: 0 4px;
+  cursor: pointer;
+  transition: transform .12s ease, color .12s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #ffc107;
+  transform: translateY(-3px) scale(1.12);
+}
+
+.star-rating input:checked ~ label,
+.star-rating input:checked + label {
+  color: #ffc107;
+  transform: translateY(-2px);
+}
+
+
+small.text-muted {
+  color: rgba(255,255,255,0.62);
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 0.88rem;
+}
+
+
+.d-grid .btn {
+  border-radius: 999px;
+  padding: 0.58rem 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+.d-grid .btn:hover { transform: translateY(-2px); opacity: 0.98; }
+.d-grid .btn.btn-success { background-color: #ffc107;; border-color: rgba(255,255,255,0.06); }
+.d-grid .btn.btn-outline-light { color: #f8f9fa; border-color: rgba(255,255,255,0.12); background: transparent; }
+
+
+@media (max-width: 576px) {
+  .card-body { padding: 1.1rem; }
+  .card-title { font-size: 1.25rem; }
+  .star-rating label { font-size: 1.4rem; }
+}
 </style>
 {% endblock %}
