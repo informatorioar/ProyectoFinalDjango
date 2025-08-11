@@ -1,18 +1,76 @@
 {% extends "padre.html" %}
 {% load crispy_forms_tags %}
 {% block loquecambia %}
-<div style="height: 64.4vh; display: flex; justify-content: center; align-items: center; margin: 2em 0 2.5em 0;">
-    <form action="" method="POST" style="max-width: max-content; padding: 1em;">
-        {% csrf_token %}
 
-        {{form|crispy}}
+<style>
+  .register-container {
+    min-height: 65vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Helvetica Neue', sans-serif;
+    padding: 2rem 1rem;
+  }
+  form.register-form {
+    background-color: #121212;
+    padding: 2.5rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+    max-width: 400px;
+    width: 100%;
+  }
+  form.register-form input,
+  form.register-form select,
+  form.register-form textarea {
+    background-color: #1e1e1e;
+    border: 1px solid #444444;
+    color: #e0e0e0;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  form.register-form input:focus,
+  form.register-form select:focus,
+  form.register-form textarea:focus {
+    outline: none;
+    border-color: #ffc107;
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.8);
+    background-color: #2a2a2a;
+  }
+  .btn-register {
+    width: 100%;
+    background-color: #ffc107;
+    color: #000000;
+    border: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.6rem 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .btn-register:hover {
+    background-color: #e0a800;
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.9);
+  }
+</style>
 
-        <button type="submit" class="btn btn-success" style="width: 16em">Registrarse</button>
+<div class="register-container">
+  <form class="register-form" action="" method="POST" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }}
 
-    </form>
+    <button type="submit" class="btn-register mt-3">Registrarse</button>
+  </form>
 </div>
+
 <script
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 crossorigin="anonymous"></script>
+
 {% endblock %}

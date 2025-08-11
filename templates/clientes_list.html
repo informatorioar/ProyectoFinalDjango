@@ -1,37 +1,102 @@
-{% extends "padre.html" %}  
+{% extends "padre.html" %}
+
 {% block loquecambia %}
-<h3 class="title-clientList" style="text-align: center; margin-top: 1em"><strong>COMUNIDAD</strong></h3>
-<div class="clientes_list" style="height: 69vh; display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">        
-        <div class="table-responsive m-5 text-center">       
-                <table class="table table-bordered  table-light">
-                        <thead class="text-light bg-success">
-                                <tr class="font-weight-bold">
-                                <th scope="col">Usuario #</th>    
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Dirección</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Teléfono</th>
-                                </tr>
-                        </thead>
-                        {% for c in clientes %}
-                        <tbody>
-                                <tr>
-                                <th scope="row">{{c.pk}}</th>
-                                <td>{{c.nombre}}</td>
-                                <td>{{c.apellido}}</td>
-                                <td>{{c.direccion}}</td>
-                                <td>{{c.email}}</td>
-                                <td>{{c.telefono}}</td>
-                                </tr>                         
-                        </tbody>
-                        {% endfor %}
-                </table>
-        </div>
-       
+<style>
+  .community-container {
+    background-color: #000000;
+    color: #ffffff;
+    min-height: 80vh;
+    padding: 2rem 1rem;
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  .community-title {
+    color: #ffc107;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255, 193, 7, 0.8);
+  }
+  .table-responsive {
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  table.table {
+    background-color: #121212;
+    color: #e0e0e0;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
+  thead {
+    background-color: #ffc107;
+    color: #000000;
+  }
+  thead th {
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    border-bottom: none;
+  }
+  tbody tr:hover {
+    background-color: #2a2a2a;
+    cursor: default;
+  }
+  tbody td, tbody th {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #444444;
+  }
+  tbody td {
+    color: #dcdcdc;
+  }
+  tbody td:first-child {
+    color: #ffc107;
+    font-weight: 600;
+  }
+  .no-data {
+    color: #888888;
+    font-style: italic;
+    padding: 2rem 0;
+  }
+</style>
+
+<div class="community-container container my-5">
+  <h3 class="community-title">COMUNIDAD</h3>
+
+  <div class="table-responsive shadow rounded">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th scope="col">Usuario</th>    
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Dirección</th>
+          <th scope="col">Email</th>
+          <th scope="col">Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in clientes %}
+        <tr>
+          <th scope="row">{{ c.pk }}</th>
+          <td>{{ c.nombre }}</td>
+          <td>{{ c.apellido }}</td>
+          <td>{{ c.direccion }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.telefono }}</td>
+        </tr>                         
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center no-data">
+            No hay usuarios registrados aún.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 {% endblock %}

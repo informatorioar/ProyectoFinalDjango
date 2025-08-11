@@ -1,48 +1,109 @@
 {% extends "padre.html" %}
 {% block loquecambia %}
-<div class="container">
-    <h3 class="text-center my-4"><strong>LISTADO DE PELÍCULAS</strong></h3>
+<style>
+  .card-img-top {
+    height: 300px;
+    width: 100%;
+    object-fit: contain; /* mostrar imagen completa */
+    background-color: #f8f9fa; /* fondo claro para espacios */
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+  }
+  .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* máximo 3 líneas */
+    line-clamp: 3; /* estándar para compatibilidad */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 72px; /* altura fija para alinear cards */
+  }
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+  /* Botón dorado elegante */
+  .btn-crear {
+    background-color: #ffc107;
+    border: none;
+    font-weight: 600;
+    color: #000;
+    transition: background-color 0.3s ease;
+  }
+  .btn-crear:hover {
+    background-color: #e0a800;
+    color: #000;
+  }
+  /* Botón Buscar dorado outline */
+  .btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #000;
+  }
+  .card-footer {
+    background-color: #f1f3f5;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+  }
+  .star-rating i {
+    font-size: 1.25rem;
+    margin-right: 3px;
+  }
+</style>
 
-    <div class="d-flex justify-content-center gap-3 mb-4">
-        <a href="{% url 'app:crear_producto' %}" class="btn btn-success">Agregar Película 📝</a>
-        <a href="{% url 'app:buscar_producto' %}" class="btn btn-outline-light">Buscar 🔍</a>
-    </div>
-    
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for p in productos %}
-        <div class="col">
-            <div class="card h-100">
-                {% if p.imagen %}
-                <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.articulo }}" style="height: 300px; object-fit: cover;">
-                {% else %}
-                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 300px;">
-                    <span class="text-white">Sin portada</span>
-                </div>
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ p.articulo }}</h5>
-                    <span class="badge bg-dark mb-2">{{ p.get_seccion_display }}</span>
-                    <p class="card-text">{{ p.descripcion|truncatechars:100 }}</p>
-                    <div class="star-rating mb-3">
-                        {% for i in "12345" %}
-                            {% if forloop.counter <= p.precio_unitario %}
-                                <i class="fas fa-star text-warning"></i>
-                            {% else %}
-                                <i class="far fa-star text-warning"></i>
-                            {% endif %}
-                        {% endfor %}
-                        <span class="ms-2">{{ p.precio_unitario }}/5</span>
-                    </div>
-                </div>
-                <div class="card-footer bg-dark">
-                    <div class="d-flex justify-content-between">
-                        <a href="{% url 'app:modificar_producto' p.id %}" class="btn btn-sm btn-outline-light">Editar</a>
-                        <a href="{% url 'app:borrar_producto' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                    </div>
-                </div>
-            </div>
+<div class="container py-4">
+  <h3 class="text-center mb-5 fw-bold text-uppercase">Listado de Películas</h3>
+
+  <div class="d-flex justify-content-center gap-3 mb-5">
+    <a href="{% url 'app:crear_producto' %}" class="btn btn-crear px-4 py-2">Agregar Película 📝</a>
+    <a href="{% url 'app:buscar_producto' %}" class="btn btn-outline-warning px-4 py-2">Buscar 🔍</a>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for p in productos %}
+    <div class="col">
+      <div class="card h-100">
+        {% if p.imagen %}
+          <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.articulo }}">
+        {% else %}
+          <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="font-style: italic;">
+            Sin portada
+          </div>
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title fw-semibold">{{ p.articulo }}</h5>
+          <span class="badge bg-dark mb-2">{{ p.get_seccion_display }}</span>
+          <p class="card-text flex-grow-1">{{ p.descripcion }}</p>
+          <div class="star-rating mt-3">
+            {% for i in "12345" %}
+              {% if forloop.counter <= p.precio_unitario %}
+                <i class="fas fa-star text-warning"></i>
+              {% else %}
+                <i class="far fa-star text-warning"></i>
+              {% endif %}
+            {% endfor %}
+            <span class="ms-2 fw-semibold">{{ p.precio_unitario }}/5</span>
+          </div>
         </div>
-        {% endfor %}
+        <div class="card-footer d-flex justify-content-between">
+          <a href="{% url 'app:modificar_producto' p.id %}" class="btn btn-sm btn-outline-dark">Editar</a>
+          <a href="{% url 'app:borrar_producto' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+        </div>
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
+

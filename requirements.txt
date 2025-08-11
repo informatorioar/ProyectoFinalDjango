@@ -1,5 +1,5 @@
-django==4.0.1
+django==4.2.11
 django-environ==0.8.1
 fontawesomefree==6.0.0
-Pillow==10.0.0
+Pillow==11.3.0
 django_crispy_forms==1.14.0
