@@ -1,22 +1,23 @@
 {% extends "padre.html" %}
 {% block loquecambia %}
 <style>
+  /* Tu CSS original */
   .card-img-top {
     height: 300px;
     width: 100%;
-    object-fit: contain; /* mostrar imagen completa */
-    background-color: #f8f9fa; /* fondo claro para espacios */
+    object-fit: contain;
+    background-color: #f8f9fa;
     padding: 10px;
     border-bottom: 1px solid #dee2e6;
   }
   .card-text {
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* máximo 3 líneas */
-    line-clamp: 3; /* estándar para compatibilidad */
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: 72px; /* altura fija para alinear cards */
+    min-height: 72px;
   }
   .card-title {
     font-weight: 700;
@@ -34,7 +35,6 @@
     transform: translateY(-8px);
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
   }
-  /* Botón dorado elegante */
   .btn-crear {
     background-color: #ffc107;
     border: none;
@@ -46,7 +46,6 @@
     background-color: #e0a800;
     color: #000;
   }
-  /* Botón Buscar dorado outline */
   .btn-outline-warning {
     color: #ffc107;
     border-color: #ffc107;
@@ -66,13 +65,83 @@
     font-size: 1.25rem;
     margin-right: 3px;
   }
+
+  /* Estilos para filtro elegante */
+  .filter-container {
+    max-width: 500px;
+    margin: 0 auto 2.5rem auto;
+    background: #fff8dc; /* color crema suave */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-container label {
+    font-weight: 700;
+    color: #b8860b; /* dorado más oscuro */
+    margin-bottom: 0;
+  }
+
+  .filter-container select {
+    border: 2px solid #ffc107;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: 600;
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 180px;
+  }
+
+  .filter-container select:focus {
+    border-color: #e0a800;
+    box-shadow: 0 0 8px rgba(224, 168, 0, 0.6);
+    outline: none;
+  }
+
+  .btn-ordenar {
+    background-color: #b8860b;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(184, 134, 11, 0.4);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-ordenar:hover {
+    background-color: #d4af37;
+    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.7);
+  }
 </style>
 
 <div class="container py-4">
   <h3 class="text-center mb-5 fw-bold text-uppercase">Listado de Películas</h3>
 
+  <form method="get" class="filter-container">
+    <label for="orden">Ordenar por:</label>
+    <select name="orden" id="orden">
+      <option value="" {% if orden_actual == "" %}selected{% endif %}>Seleccionar...</option>
+      <option value="fecha_asc" {% if orden_actual == "fecha_asc" %}selected{% endif %}>Fecha ↑ (más antiguo primero)</option>
+      <option value="fecha_desc" {% if orden_actual == "fecha_desc" %}selected{% endif %}>Fecha ↓ (más nuevo primero)</option>
+      <option value="alf_asc" {% if orden_actual == "alf_asc" %}selected{% endif %}>Alfabético A-Z</option>
+      <option value="alf_desc" {% if orden_actual == "alf_desc" %}selected{% endif %}>Alfabético Z-A</option>
+    </select>
+    <button type="submit" class="btn-ordenar">Ordenar</button>
+  </form>
   <div class="d-flex justify-content-center gap-3 mb-5">
-    <a href="{% url 'app:crear_producto' %}" class="btn btn-crear px-4 py-2">Agregar Película 📝</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'app:crear_producto' %}" class="btn btn-crear px-4 py-2">Agregar Película 📝</a>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn btn-warning px-4 py-2">Inicia sesión para agregar película</a>
+    {% endif %}
     <a href="{% url 'app:buscar_producto' %}" class="btn btn-outline-warning px-4 py-2">Buscar 🔍</a>
   </div>
 
@@ -88,7 +157,11 @@
           </div>
         {% endif %}
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">{{ p.articulo }}</h5>
+          <h5 class="card-title">
+            <a href="{% url 'app:producto_detalle' p.id %}" class="text-decoration-none text-dark">
+              {{ p.articulo }}
+            </a>
+          </h5>
           <span class="badge bg-dark mb-2">{{ p.get_seccion_display }}</span>
           <p class="card-text flex-grow-1">{{ p.descripcion }}</p>
           <div class="star-rating mt-3">
@@ -103,8 +176,12 @@
           </div>
         </div>
         <div class="card-footer d-flex justify-content-between">
-          <a href="{% url 'app:modificar_producto' p.id %}" class="btn btn-sm btn-outline-dark">Editar</a>
-          <a href="{% url 'app:borrar_producto' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+          {% if user.is_authenticated and user == p.usuario %}
+            <a href="{% url 'app:modificar_producto' p.id %}" class="btn btn-sm btn-outline-dark">Editar</a>
+            <a href="{% url 'app:borrar_producto' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+          {% else %}
+            <div></div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -112,3 +189,5 @@
   </div>
 </div>
 {% endblock %}
+
+
