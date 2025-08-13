@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
+from django.utils import timezone
+from django.conf import settings
 
 # Create your models here.
 
@@ -77,3 +79,22 @@ class Contacto(models.Model):
     def __str__(self) -> str:
         return f'Mensaje - Asunto: {self.asunto} | Mensaje: {self.mensaje}'
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Clase comentario
+class Comentario(models.Model):
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Usuario')
+    texto = models.TextField(max_length=1000, verbose_name='Texto del comentario')
+    fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
+    fecha_actualizacion = models.DateTimeField(auto_now=True, verbose_name='Última actualización')
+    activo = models.BooleanField(default=True, verbose_name='¿Activo?')
+    respuesta_a = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Respuesta a')
+    producto = models.ForeignKey('Producto', on_delete=models.CASCADE, null=True, blank=True, related_name='comentarios')
+
+    def __str__(self):
+        return f'Comentario de {self.usuario.username if self.usuario else 'Anónimo'} - {self.texto[:50]}...'
+    
+    class Meta:
+        ordering = ['-fecha_creacion']
+        verbose_name = 'Comentario'
+        verbose_name_plural = 'Comentarios'

@@ -20,7 +20,8 @@ urlpatterns = [
     path('registro/', RegistrarUsuario.as_view(), name="registro"),                                          
     path('editar_perfil', EditProfile,name="editar_perfil"),                    
     path('logout/', LogoutView.as_view(next_page='app:login'), name="logout"),                          
-    path('nosotros/',AboutUsView,name="nosotros"),                              
+    path('nosotros/',AboutUsView,name="nosotros"),
+    path('pelicula/<int:producto_id>/comentar/', agregar_comentario, name='agregar_comentario'),                        
 
     
 ]

@@ -1,8 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import View, UpdateView, DeleteView, ListView, CreateView
 from app.forms import ProductCreateForms, ContactCreateForms, UserRegisterForm, UserEditForm
-from app.models import Producto, Contacto, NuevoUsuario
+from app.models import Producto, Contacto, Comentario
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import Group
@@ -68,12 +68,24 @@ class LogoutView(LogoutView):
 ## VISTAS DE PRODUCTO
 # Vista de Clase que lista los productos
 class ProductListView(ListView):
-    def get(self,request,*args,**kwargs):
-        productos = Producto.objects.all()
-        context = {
-            'productos':productos
-        }
-        return render(request,'productos_list.html',context)
+    model = Producto
+    template_name = 'productos_list.html'
+    context_object_name = 'productos'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        genero_seleccionado = self.request.GET.get('genero')
+
+        if genero_seleccionado:
+            queryset = queryset.filter(seccion=genero_seleccionado)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['generos'] = Producto.GENERO_CHOICES
+        context['genero_seleccionado'] = self.request.GET.get('genero') 
+        return context
 
 
 # Vista para realizar búsqueda de productos (por articulo)
@@ -311,3 +323,20 @@ def AboutUsView(request):
 
         }
         return render(request,"nosotros.html",context)
+
+
+#------------------------------------------------------------------------------
+
+# Vista para comentario
+@login_required
+def agregar_comentario(request, producto_id):
+    producto = get_object_or_404(Producto, id = producto_id)
+    if request.method == 'POST':
+        texto = request.POST.get('texto')
+        Comentario.objects.create(
+            usuario = request.user,
+            texto = texto,
+            producto = producto
+        )
+        return redirect('app:productos')
+    return render(request, 'agregar_comentario.html', {'producto' : producto})

@@ -1,13 +1,38 @@
 {% extends "padre.html" %}
 {% block loquecambia %}
 <div class="container">
-    <h3 class="text-center my-4"><strong>LISTADO DE PELÍCULAS</strong></h3>
+    <!-- Título dinámico (muestra el género seleccionado) -->
+    <h3 class="text-center my-4">
+        <strong>
+            {% if genero_seleccionado %}
+            PELÍCULAS DE {{ productos.0.get_seccion_display|upper }}
+            {% else %}
+            LISTADO DE PELÍCULAS
+            {% endif %}
+        </strong>
+    </h3>
 
+    <!-- Barra superior con botones de acción -->
     <div class="d-flex justify-content-center gap-3 mb-4">
         <a href="{% url 'app:crear_producto' %}" class="btn btn-success">Agregar Película 📝</a>
         <a href="{% url 'app:buscar_producto' %}" class="btn btn-outline-light">Buscar 🔍</a>
     </div>
 
+    <!-- Filtros por género (nuevo) -->
+    <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+        <a href="?"
+            class="btn btn-sm {% if not genero_seleccionado %}btn-dark{% else %}btn-outline-secondary{% endif %}">
+            Todas
+        </a>
+        {% for genero in generos %}
+        <a href="?genero={{ genero.0 }}"
+            class="btn btn-sm {% if genero_seleccionado == genero.0 %}btn-dark{% else %}btn-outline-secondary{% endif %}">
+            {{ genero.1 }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Listado de películas -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for p in productos %}
         <div class="col">
@@ -34,6 +59,33 @@
                             {% endfor %}
                             <span class="ms-2">{{ p.precio_unitario }}/5</span>
                     </div>
+
+                    <!-- Botón para comentarios -->
+                    <div class="mt-3">
+                        <a href="{% url 'app:agregar_comentario' p.id %}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-comment"></i> Deja un comentario
+                        </a>
+                    </div>
+
+                    <!-- Sección para mostrar comentarios existentes -->
+                    {% if p.comentario_set.all %}
+                    <div class="mt-3">
+                        <h6>Comentarios:</h6>
+                        <ul class="list-group list-group-flush">
+                            {% for comentario in p.comentario_set.all|slice:":2" %}
+                            <li class="list-group-item small p-2">
+                                <strong>{{ comentario.usuario.username }}:</strong>
+                                {{ comentario.texto|truncatechars:50 }}
+                                <br>
+                                <small class="text-muted">{{ comentario.fecha_creacion|date:"d/m/Y" }}</small>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% if p.comentario_set.count > 2 %}
+                        <a href="#" class="btn btn-link btn-sm">Ver todos ({{ p.comentario_set.count }})</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="card-footer bg-dark">
                     <div class="d-flex justify-content-between">
