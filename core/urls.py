@@ -24,12 +24,15 @@ from django.urls import include, path
 
 # VISTAS LOGIN_REQUEST Y REGISTER AGREGAR EN VERSION FINAL!!
 from core.views import HomeView
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", HomeView, name="inicio"),  # llamamos nuestra página de inicio - "hOME"
     path("app/", include("app.urls")),  # incluímos url's de la app
+    path("login/", LoginView.as_view(template_name="login.html"), name="login"),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

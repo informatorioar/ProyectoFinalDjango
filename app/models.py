@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import User  # <-- Importa User
+from datetime import datetime
 
 
 # Clase Cliente
@@ -15,11 +15,12 @@ class Cliente(models.Model):
     def __str__(self) -> str:
         return f"Nombre: {self.nombre} | Apellido: {self.apellido} | Dirección: {self.direccion} | email: {self.email} | telefono: {self.telefono}"
 
+# ------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------------------------------------------------------------------------------------
+from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
-
-# Clase Producto
 class Producto(models.Model):
     GENERO_CHOICES = [
         ("ACC", "Acción"),
@@ -41,15 +42,13 @@ class Producto(models.Model):
         help_text="Puntaje de 1 a 5 estrellas",
     )
     imagen = models.ImageField("Portada", null=True, blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='productos', null=True, blank=True)
+    fecha_publicacion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return (
-            f"{self.articulo} ({self.get_seccion_display()}) - {self.precio_unitario}★"
-        )
+        return f"{self.articulo} ({self.get_seccion_display()}) - {self.precio_unitario}★"
 
-
-# ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# ------------------------------------------------------------------------------
 
 # Clase Contacto (Feedback Clientes)
 class Contacto(models.Model):
@@ -62,5 +61,16 @@ class Contacto(models.Model):
     def __str__(self) -> str:
         return f"Mensaje - Asunto: {self.asunto} | Mensaje: {self.mensaje}"
 
+# ------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Comentario(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='comentarios')
+    texto = models.TextField()
+    creado_en = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comentarios', null=True, blank=True)
+
+    def __str__(self):
+        return f'Comentario en {self.producto.articulo} - {self.creado_en}'
+
+
+

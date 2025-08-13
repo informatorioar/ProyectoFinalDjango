@@ -67,31 +67,25 @@
       <thead>
         <tr>
           <th scope="col">Usuario</th>    
-          <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
-          <th scope="col">Dirección</th>
+          <th scope="col">Nombre</th>
           <th scope="col">Email</th>
-          <th scope="col">Teléfono</th>
         </tr>
       </thead>
       <tbody>
-        {% for c in clientes %}
-        <tr>
-          <th scope="row">{{ c.pk }}</th>
-          <td>{{ c.nombre }}</td>
-          <td>{{ c.apellido }}</td>
-          <td>{{ c.direccion }}</td>
-          <td>{{ c.email }}</td>
-          <td>{{ c.telefono }}</td>
-        </tr>                         
-        {% empty %}
-        <tr>
-          <td colspan="6" class="text-center no-data">
-            No hay usuarios registrados aún.
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
+    {% for c in clientes %}
+    <tr>
+      <th scope="row">{{ c.pk }}</th>
+      <td>{{ c.first_name }}</td>
+      <td>{{ c.last_name }}</td>
+      <td>{{ c.email }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="6" class="text-center no-data">No hay usuarios registrados aún.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
     </table>
   </div>
 </div>

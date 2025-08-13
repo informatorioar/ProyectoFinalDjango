@@ -14,17 +14,21 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.conf import settings
 
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
+
+
 #----------------------------------------------------------------------------------------------
 
 ## VISTAS DE CLIENTE
 # Vista de Clase que lista los clientes
+
 class ClientListView(ListView):
-    def get(self,request):
-        clientes = Cliente.objects.all()
-        context = {
-            'clientes':clientes
-        }
-        return render(request,'clientes_list.html',context)
+    def get(self, request):
+        clientes = User.objects.all()
+        return render(request, 'clientes_list.html', {'clientes': clientes})
+
 
 #----------------------------------------------------------------------------------------------
 
@@ -63,49 +67,47 @@ def ToFindProductView(request):
 
 
 # Vista de clase - permite crear un nuevo Producto
-class ProductCreateView(View):
-    def get(self,request,*args,**kwargs):
-        #parte creada para llamar el contenido del en forms.py (donde generamos producto)
+
+class ProductCreateView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
         form = ProductCreateForms()
-        context={
-            'form':form
-        }
-        return render(request,'crear_producto.html',context)
-    def post(self,request):
-        if request.method=="POST":
-            form = ProductCreateForms(request.POST,request.FILES)
-            if form.is_valid():
-                articulo = form.cleaned_data.get('articulo')
-                seccion = form.cleaned_data.get('seccion')
-                descripcion = form.cleaned_data.get('descripcion')
-                precio_unitario = form.cleaned_data.get('precio_unitario')
-                imagen = form.cleaned_data.get('imagen')
+        return render(request, 'crear_producto.html', {'form': form})
 
-                p, created = Producto.objects.get_or_create(articulo=articulo,seccion=seccion,descripcion=descripcion,precio_unitario=precio_unitario,imagen=imagen)
-                p.save()
-                return redirect('app:productos')
+    def post(self, request):
+        form = ProductCreateForms(request.POST, request.FILES)
+        if form.is_valid():
+            producto = form.save(commit=False)
+            producto.usuario = request.user  # guardo usuario actual
+            producto.save()
+            return redirect('app:productos')
 
-        context = {
-        }
-        return render(request,'crear_producto.html',context)
+        return render(request, 'crear_producto.html', {'form': form})
+
 
 
 # Vista de clase que permite modificar (update) nuestro producto
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Producto
-    fields = ['articulo','seccion','descripcion','precio_unitario','imagen']
+    fields = ['articulo', 'seccion', 'descripcion', 'precio_unitario', 'imagen']
     template_name = 'modifcar_producto.html'
 
     def get_success_url(self):
-        pk = self.kwargs['pk']
         return reverse_lazy('app:productos')
 
+    def test_func(self):
+        producto = self.get_object()
+        return self.request.user == producto.usuario
 
-# Vista de clase que nos permite eliminar un producto
-class ProductDeleteView(DeleteView):
+
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Producto
     template_name = 'borrar_producto.html'
     success_url = reverse_lazy('app:productos')
+
+    def test_func(self):
+        producto = self.get_object()
+        return self.request.user == producto.usuario
 
 #----------------------------------------------------------------------------------------------
 
@@ -261,4 +263,59 @@ def AboutUsView(request):
 
         }
         return render(request,"nosotros.html",context)
+
+#--------------------
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Producto, Comentario
+from django.contrib.auth.decorators import login_required
+# Vista de detalle del producto
+
+def producto_detalle(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    comentarios = producto.comentarios.order_by('-creado_en')
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            # Redirigir a login o mostrar mensaje de error
+            return redirect(f'/login/?next=/app/pelicula/{pk}/')  # o la url que uses
+
+        texto = request.POST.get('comentario')
+        if texto:
+            Comentario.objects.create(producto=producto, texto=texto, usuario=request.user)
+            return redirect('app:producto_detalle', pk=pk)
+
+    return render(request, 'producto_detalle.html', {
+        'producto': producto,
+        'comentarios': comentarios,
+    })
+
+
+#-----------------------
+from django.shortcuts import render
+from .models import Producto
+
+def productos_list(request):
+    orden = request.GET.get('orden', '')  
+
+    productos = Producto.objects.all()  
+
+
+    if orden == 'fecha_asc':
+        productos = productos.order_by('fecha_publicacion')
+    elif orden == 'fecha_desc':
+        productos = productos.order_by('-fecha_publicacion')
+    elif orden == 'alf_asc':
+        productos = productos.order_by('articulo')
+    elif orden == 'alf_desc':
+        productos = productos.order_by('-articulo')
+
+    context = {
+        'productos': productos,
+        'orden_actual': orden
+    }
+
+    return render(request, 'app/productos_list.html', context)
+
+
+
 

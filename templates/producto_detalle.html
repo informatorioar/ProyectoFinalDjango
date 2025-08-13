@@ -1,0 +1,74 @@
+{% extends "padre.html" %}
+{% block loquecambia %}
+
+<div class="container py-4" style="background-color: #121212; border-radius: 8px; padding: 20px;">
+    <h2 class="mb-3" style="color: #FFC107;">{{ producto.articulo }}</h2>
+
+    {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" alt="{{ producto.articulo }}" 
+             class="img-fluid mb-3" style="max-width: 300px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.5);">
+    {% endif %}
+
+    <p><strong style="color: #fff; font-weight: 600;">Género:</strong> <span style="color: #ddd;">{{ producto.get_seccion_display }}</span></p>
+    <p><strong style="color: #fff; font-weight: 600;">Reseña:</strong> <span style="color: #eee;">{{ producto.descripcion }}</span></p>
+    <p><strong style="color: #fff; font-weight: 600;">Puntaje:</strong> <span class="text-warning fw-bold">{{ producto.precio_unitario }}/5</span></p>
+
+    <hr style="border-color: #444;">
+
+    <h4 style="color: #fff;">Comentarios</h4>
+    <ul class="list-group mb-4" style="background: transparent; border: none;">
+        {% for comentario in comentarios %}
+            <li class="list-group-item" 
+                style="background: #1e1e1e; color: #eee; border-radius: 6px; margin-bottom: 8px; border: none;">
+                <strong style="color:#ffc107;">{{ comentario.usuario.username }}</strong> dijo: <br>
+                {{ comentario.texto }} <br>
+                <small class="text-muted fst-italic" style="color: #bbb;">{{ comentario.creado_en|date:"d/m/Y H:i" }}</small>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center fst-italic" 
+                style="background: #1e1e1e; color: #777; border-radius: 6px; border: none;">
+                No hay comentarios aún.
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+        <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="comentario" class="form-label" style="color: #fff; font-weight: 600;">Agregar comentario</label>
+                <textarea name="comentario" id="comentario" rows="3" class="form-control" 
+                          placeholder="Escribe tu comentario..." required
+                          style="border-radius: 6px; border: 1px solid #444; background-color: #222; color: #eee;"></textarea>
+                <div class="invalid-feedback" style="color: #ffb700;">
+                    Por favor ingresa un comentario.
+                </div>
+            </div>
+            <button type="submit" class="btn btn-warning px-4 fw-semibold">Enviar</button>
+            <a href="{% url 'app:productos' %}" class="btn btn-outline-secondary ms-3">Volver</a>
+        </form>
+    {% else %}
+        <p style="color: #fff;">
+            <a href="{% url 'login' %}" class="text-warning">Inicia sesión</a> para agregar comentarios.
+        </p>
+    {% endif %}
+</div>
+
+<script>
+(() => {
+  'use strict'
+  const forms = document.querySelectorAll('.needs-validation')
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
+
+{% endblock %}
+

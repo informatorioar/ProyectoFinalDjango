@@ -1,20 +1,27 @@
 {% extends "padre.html" %}
 {% load static %}
 {% block loquecambia %}
-<h2 style="font-size: 3em; text-align: center; margin-top: 3em;">🔎</h2>
-<h3 style="text-align: center;"><strong>BÚSQUEDA</strong></h3>
-<div style="height: 38.1vh; display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: -2em;">
-    <form action="/app/producto_buscado/" method="GET" style="margin-left: 10px;">
-        <input type="text" name="articulo">
-        <input type="submit" value="Buscar" style="padding: 2px; border-radius: 5px; background-color: rgb(33,136,56);color: white;">
-    </form>
-    <br>
-    <button class="btn btn-success" style="margin-left: 10px; margin-top: 1em; width: 16.5em"><a href="{% url 'app:productos' %}" style="padding:10px; text-decoration: none; color: white;">Volver a productos</a></button>
-    <br>
-    <br>
+
+<div class="container py-5 text-center">
+    <h2 class="mb-2" style="font-size: 3em;">🔎</h2>
+    <h3 class="fw-bold" style="color: #ffc107;">BÚSQUEDA</h3>
+
+    <div class="d-flex flex-column align-items-center mt-4" style="height: 38.1vh;">
+        <form action="/app/producto_buscado/" method="GET" class="d-flex" style="gap: 8px;">
+            <input type="text" name="articulo"
+                   style="padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background-color: #1b1b1b; color: white; outline: none;">
+            <input type="submit" value="Buscar"
+                   style="padding: 6px 14px; border-radius: 8px; background-color: #ffc107; color: #212529; border: none; font-weight: 600;">
+        </form>
+
+        <button class="btn mt-4" style="background-color: #ffc107; border: none; border-radius: 999px; padding: 0.6em 2em; font-weight: 600; box-shadow: 0 6px 15px rgba(0,0,0,0.4);">
+            <a href="{% url 'app:productos' %}" style="text-decoration: none; color: #212529;">Volver a productos</a>
+        </button>
+    </div>
 </div>
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 crossorigin="anonymous"></script>
+
 {% endblock %}

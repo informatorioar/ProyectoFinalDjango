@@ -7,11 +7,13 @@ from app.models import Contacto, Producto
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-# FORM DE PRODUCTO
 class ProductCreateForms(forms.ModelForm):
     class Meta:
         model = Producto
         fields = ("articulo", "seccion", "descripcion", "precio_unitario", "imagen")
+        widgets = {
+            'seccion': forms.Select(attrs={'class': 'form-select'}),
+        }
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -56,3 +58,33 @@ class UserEditForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["email", "password1", "password2", "last_name", "first_name"]
+
+#----------------------------
+
+from django import forms
+from .models import Comentario
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['texto']
+
+#----------------------
+
+from django.views import View
+from django.shortcuts import render, redirect
+
+class ProductCreateView(View):
+    def get(self, request, *args, **kwargs):
+        form = ProductCreateForms()
+        print(form.fields['seccion'].widget)  # <-- para verificar que es un Select
+        context = {'form': form}
+        return render(request, 'crear_producto.html', context)
+
+    def post(self, request):
+        form = ProductCreateForms(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('app:productos')
+        context = {'form': form}
+        return render(request, 'crear_producto.html', context)
