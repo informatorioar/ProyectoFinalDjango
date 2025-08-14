@@ -31,8 +31,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
 
-# Set Django settings to use production configuration with MySQL
-ENV DJANGO_SETTINGS_MODULE=core.settings.prod
+# Set Django settings to use development configuration
+ENV DJANGO_SETTINGS_MODULE=core.settings.dev
 
 # Copy the entrypoint script
 COPY scripts/entrypoint.sh /entrypoint.sh
