@@ -45,3 +45,6 @@ STORAGES = {
 }
 
 GS_BUCKET_NAME = getenv("GS_BUCKET_NAME", "gcs-bucket-name")
+GOOGLE_APPLICATION_CREDENTIALS = getenv(
+    "GOOGLE_APPLICATION_CREDENTIALS", "/path/to/your/credentials.json"
+)
