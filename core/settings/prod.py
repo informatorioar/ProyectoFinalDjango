@@ -35,13 +35,13 @@ STORAGES = {
         "OPTIONS": {
             #   ...your_options_here
         },
-        "staticfiles": {
-            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-            "OPTIONS": {
-                #  ...your_options_here
-            },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {
+            #  ...your_options_here
         },
-    }
+    },
 }
 
 GS_BUCKET_NAME = getenv("GS_BUCKET_NAME", "gcs-bucket-name")
