@@ -28,3 +28,14 @@ DATABASES = {
         "PORT": getenv("DB_PORT", "3306"),  # Defaults to MySQL's default port
     }
 }
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {
+            #   ...your_options_here
+        },
+    },
+}
+
+GS_BUCKET_NAME = getenv("GS_BUCKET_NAME", "gcs-bucket-name")

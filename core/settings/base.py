@@ -32,6 +32,7 @@ THIRD_PARTY_APPS = [
     "crispy_forms",
     "crispy_bootstrap4",  # Make sure to specify the template pack app
     "fontawesomefree",
+    "storages",  # For Google Cloud Storage
 ]
 
 INSTALLED_APPS = [
@@ -74,7 +75,9 @@ TEMPLATES = [
 
 # --- Password Validation ---
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -101,5 +104,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/"

@@ -20,7 +20,8 @@
         "ty>=0.0.1a16",        # Type checker for Python
     ]
     prod = [
-        "mysqlclient>=2.2.6", # MySQL database adapter
+        # "mysqlclient>=2.2.6", # MySQL database adapter
+        "django-storages[google]>=1.14.6",
     ]
 # Ruff is your all-in-one tool for linting, formatting, and import sorting.
 # A robust Ruff config for Python beginners.
