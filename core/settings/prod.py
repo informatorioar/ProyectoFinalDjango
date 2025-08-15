@@ -29,22 +29,31 @@ DATABASES = {
     }
 }
 
+# Google Cloud Storage Configuration
+GS_BUCKET_NAME = getenv("GS_BUCKET_NAME", "informatorio")
+GOOGLE_APPLICATION_CREDENTIALS = getenv(
+    "GOOGLE_APPLICATION_CREDENTIALS", "gcs-informatorio-key.json"
+)
+
+# Static files settings for GCS - Override base.py settings
+STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
+STATIC_ROOT = None  # Not needed when using cloud storage
+STATICFILES_DIRS = []  # Clear local directories when using cloud storage
+GS_DEFAULT_ACL = "publicRead"
+
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
         "OPTIONS": {
-            #   ...your_options_here
+            "bucket_name": GS_BUCKET_NAME,
+            "location": "media",
         },
     },
     "staticfiles": {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
         "OPTIONS": {
-            #  ...your_options_here
+            "bucket_name": GS_BUCKET_NAME,
+            "location": "static",
         },
     },
 }
-
-GS_BUCKET_NAME = getenv("GS_BUCKET_NAME", "gcs-bucket-name")
-GOOGLE_APPLICATION_CREDENTIALS = getenv(
-    "GOOGLE_APPLICATION_CREDENTIALS", "/path/to/your/credentials.json"
-)
