@@ -10,7 +10,7 @@
     ]
     description = "Proyecto final del curso de Django en Informatorio AR"
     name = "proyectofinaldjango"
-    requires-python = "~3.10.0"
+    requires-python = "~=3.10.0"
     version = "0.0.1"
 
 [dependency-groups]
